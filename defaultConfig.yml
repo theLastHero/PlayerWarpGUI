@@ -1,0 +1,30 @@
+#################################################
+# +-------------------------------------------+ #
+# |   Config.YML Revision 02 by Judgetread    | #
+# +-------------------------------------------+ #
+#################################################
+
+#safe warping
+SafeWarp:
+  enabled: false
+  unsafeBlocks:
+    - 8
+    - 9
+    - 10
+    - 11
+    - 70
+    - 71
+    - 147
+    - 148
+
+
+#teleporting
+teleport:
+  cooldown: 3
+  cancelOnMovement: true
+
+
+DefaultWarpIcon: '35:9'
+
+Messages:
+  Prefix: '[PlayerWarpGUI]'

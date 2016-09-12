@@ -1,0 +1,7 @@
+name: PlayerWarpGUI
+version: 0.1.dev
+description: PlayerWarpGUI
+author: judgetread
+authors: [judgetread] 
+website: http://thelasthero.net
+main: PlayerWarpGUI.PlayerWarpGUI
