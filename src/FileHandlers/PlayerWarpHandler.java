@@ -33,17 +33,24 @@ public class PlayerWarpHandler {
 	// -----------------------------------------------------
 	// createObjectFromWarpFile
 	// -----------------------------------------------------
+	@SuppressWarnings("unused")
 	public boolean createObjectFromWarpFile(File file) {
 
-		//String filename = file.getName().replace(".yml", "");
-		UUID playerUUID = UUID.fromString(file.getName().replace(".yml", ""));
+		UUID playerUUID = null;
 		String playerName = null;
 		String warpLocation = null;
 		String uuid = null;
 
+		//check if file name is a validate UUID
+		try{
+			playerUUID = UUID.fromString(file.getName().replace(".yml", ""));
+		} catch (IllegalArgumentException exception){
+			return true;
+		}
+		
 		// check if object already exsits
 		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {
-			return false;
+			return true;
 		}
 
 		// load the configs
@@ -51,23 +58,24 @@ public class PlayerWarpHandler {
 		try {
 
 			config.load(file);
-			plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
+			//plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
 
 			// set object userName
 			playerName = Bukkit.getServer().getOfflinePlayer(playerUUID).getName();
-			plugin.getLogger().info("   playerName: " + playerName);
+			//plugin.getLogger().info("   playerName: " + playerName);
 
 			// set warpLocation
 			warpLocation = config.getString("warpDetails.Location");
-			plugin.getLogger().info("   warpLocation" + warpLocation);
+			//plugin.getLogger().info("   warpLocation" + warpLocation);
 
 			// set warpLocation
 			uuid = config.getString("playerData.UUID");
-			plugin.getLogger().info("   uuid: " + uuid);
+			//plugin.getLogger().info("   uuid: " + uuid);
 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return true;
 		}
 
 		//cretae actual object
@@ -86,12 +94,10 @@ public class PlayerWarpHandler {
 		}
 
 		File warpsFolder = new File(plugin.warpsFolder);
-		String filename = null;
 
 		if (!(warpsFolder.listFiles() == null)) {
 			for (File file : warpsFolder.listFiles()) {
 
-				plugin.getLogger().info(filename);
 				createObjectFromWarpFile(file);
 
 			}

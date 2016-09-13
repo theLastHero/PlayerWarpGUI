@@ -37,11 +37,11 @@ public class ConfigHandler {
 
 			// load useSafeWarp
 			PlayerWarpGUI.useSafeWarp = config.getBoolean("SafeWarp.enabled", false);
-			plugin.getLogger().info("Setting useSafeWarp to: " + String.valueOf(PlayerWarpGUI.useSafeWarp));
+			//plugin.getLogger().info("Setting useSafeWarp to: " + String.valueOf(PlayerWarpGUI.useSafeWarp));
 
 			// load unsafeBlocks
 			PlayerWarpGUI.unsafeBlocks = config.getStringList("SafeWarp.unsafeBlocks");
-			plugin.getLogger().info("unSafeBlocks: ");
+			//plugin.getLogger().info("unSafeBlocks: ");
 
 			// print out unsafeBlocks
 			int theTotalNumberOfElements = PlayerWarpGUI.unsafeBlocks.size();
@@ -51,35 +51,35 @@ public class ConfigHandler {
 
 			// load teleport cooldown
 			PlayerWarpGUI.cooldown = config.getInt("teleport.cooldown", 3);
-			plugin.getLogger().info("Setting teleport cooldown to: " + PlayerWarpGUI.cooldown + " seconds");
+			//plugin.getLogger().info("Setting teleport cooldown to: " + PlayerWarpGUI.cooldown + " seconds");
 			
 			// load cancelOnMovement
 			PlayerWarpGUI.cancelOnMovement = config.getBoolean("teleport.cancelOnMovement", true);
-			plugin.getLogger().info("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
+			//plugin.getLogger().info("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
 
 			// load defaultWarpIcon
 			PlayerWarpGUI.defaultWarpIcon = config.getString("GUI.DefaultWarpIcon", "35:9");
-			plugin.getLogger().info("Setting defaultWarpIcon to: " + PlayerWarpGUI.defaultWarpIcon);
+			//plugin.getLogger().info("Setting defaultWarpIcon to: " + PlayerWarpGUI.defaultWarpIcon);
 			
 			// load nextPageIcon
 			PlayerWarpGUI.nextPageIcon = config.getString("GUI.nextPageIcon", "35:8");
-			plugin.getLogger().info("Setting nextPageIcon to: " + PlayerWarpGUI.nextPageIcon);
+			//plugin.getLogger().info("Setting nextPageIcon to: " + PlayerWarpGUI.nextPageIcon);
 
 			// load messagePrefix
 			PlayerWarpGUI.messagePrefix = config.getString("Messages.prefix", "[PlayerWarpGUI]");
-			plugin.getLogger().info("Setting messagePrefix to: " + PlayerWarpGUI.messagePrefix);
+			//plugin.getLogger().info("Setting messagePrefix to: " + PlayerWarpGUI.messagePrefix);
 
 			// load chest size
 			PlayerWarpGUI.chestSize = (config.getInt("GUI.rows") * 9);
-			plugin.getLogger().info("Setting chestSize: " + PlayerWarpGUI.chestSize);
+			//plugin.getLogger().info("Setting chestSize: " + PlayerWarpGUI.chestSize);
 
 			// load chest size
 			PlayerWarpGUI.chestText = config.getString("GUI.chestText", "PlayerWarpGUI");
-			plugin.getLogger().info("Setting chestText to: " + PlayerWarpGUI.chestText);
+			//plugin.getLogger().info("Setting chestText to: " + PlayerWarpGUI.chestText);
 			
 			// load player warp text
 			PlayerWarpGUI.playerWarpText = config.getString("GUI.playerWarpText", "&6[username]");
-			plugin.getLogger().info("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
+			//plugin.getLogger().info("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
 
 		} catch (Exception e) {
 			e.printStackTrace();

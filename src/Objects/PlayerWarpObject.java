@@ -31,8 +31,8 @@ public class PlayerWarpObject {
 	private String warpLocation;
 	
 	
-	public int PlayerWarpObject() {
-		return uid;
+	public PlayerWarpObject() {
+		//return uid;
 	}
 
 	

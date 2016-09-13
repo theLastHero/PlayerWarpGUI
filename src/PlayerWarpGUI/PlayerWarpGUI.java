@@ -19,22 +19,22 @@ public class PlayerWarpGUI extends JavaPlugin {
 
 	public static PlayerWarpGUI instance;
 	private PlayerWarpGUI plugin;
-	public String configFile = this.getDataFolder() + File.separator + "config.yml";
-	public String warpsFolder = this.getDataFolder() + File.separator + "playerWarps";
-	public String defaultConfigFile = "defaultConfig.yml";
+	public String configFile = this.getDataFolder() + File.separator + "config.yml";	// main config file location
+	public String warpsFolder = this.getDataFolder() + File.separator + "playerWarps";	// folder that holds the playerwarp folders
+	public String defaultConfigFile = "defaultConfig.yml";	
 	public String defaultWarpConfigFile = "defaultWarpConfig.yml";
 
 	//
 	public static boolean useSafeWarp; // wether to check for safe warps when setting and teleporting to
 	public static List<String> unsafeBlocks; // list of unsafe blocks to land on
 	public static int cooldown; // cooldown for teleport in seconds
-	public static boolean cancelOnMovement;
-	public static int chestSize;
-	public static String chestText;
+	public static boolean cancelOnMovement;  // cancel teleport if player moves
+	public static int chestSize;	// size o fthe chest to open
+	public static String chestText;	// text on the chest that opens
 
 	public static String defaultWarpIcon = "35:9"; // defaul icon that will show in the GUI for player warps
 	public static String nextPageIcon = "35:8"; // defaul icon that will show in the GUI for player warps
-	public static String playerWarpText = "&6[username]";
+	public static String playerWarpText = "&6[username]"; //text that displays on icon
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
 
 	public ConfigHandler configHandler;
@@ -64,10 +64,13 @@ public class PlayerWarpGUI extends JavaPlugin {
 		PlayerWarpGUI.playerWarpManager = new PlayerWarpManager(this);
 		PlayerWarpGUI.chestObject = new chestObject(this);
 		
+		//listeners
 		this.getCommand("playerwarps").setExecutor(new CommandListener());
 		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(), this);
 
+		//load config file data
 		configHandler.loadConfigFile();
+		//load all warp objects
 		playerWarpHandler.loadAllWarpObjects();
 
 
