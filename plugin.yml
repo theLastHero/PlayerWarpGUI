@@ -5,3 +5,7 @@ author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: PlayerWarpGUI.PlayerWarpGUI
+commands:
+   playerwarps:
+      description: Set and go to player warps.
+      aliases: [pwarps, pwarp, playerwarp]  

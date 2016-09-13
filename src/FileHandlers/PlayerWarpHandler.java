@@ -1,16 +1,16 @@
 package FileHandlers;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import Managers.PlayerWarpManager;
+import Objects.PlayerWarpObject;
 import PlayerWarpGUI.PlayerWarpGUI;
-import Utils.NameFetcher;
 
 public class PlayerWarpHandler {
 
@@ -22,38 +22,57 @@ public class PlayerWarpHandler {
 	public PlayerWarpHandler(PlayerWarpGUI playerWarpGUI) {
 		plugin = playerWarpGUI;
 	}
+	
+	// -----------------------------------------------------
+	// getPlayer
+	// -----------------------------------------------------
+	public static  ArrayList<PlayerWarpObject> getPlayerWarpObjects() {
+		return PlayerWarpObject.playerWarpObjects;
+	}
 
 	// -----------------------------------------------------
-	// loadWarpYMLFile
+	// createObjectFromWarpFile
 	// -----------------------------------------------------
-	public void loadWarpYMLFile(File file) {
+	public boolean createObjectFromWarpFile(File file) {
 
-		String filename = file.getName().replace(".yml", "");
-		UUID playerUUID = UUID.fromString(filename);
+		//String filename = file.getName().replace(".yml", "");
+		UUID playerUUID = UUID.fromString(file.getName().replace(".yml", ""));
 		String playerName = null;
 		String warpLocation = null;
-		
+
+		// check if object already exsits
+		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {
+			return false;
+		}
+
 		// load the configs
 		FileConfiguration config = new YamlConfiguration();
 		try {
 
 			config.load(file);
-			plugin.getLogger().info("LOADED PLAYERWARP FILE: " + filename);
+			plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
 
 			// set object userName
 			playerName = Bukkit.getServer().getOfflinePlayer(playerUUID).getName();
 			plugin.getLogger().info("   playerName: " + playerName);
 
 			// set warpLocation
-			warpLocation = config.getString("warpDetials.Location");
+			warpLocation = config.getString("warpDetails.Location");
 			plugin.getLogger().info("   warpLocation" + warpLocation);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		//cretae actual object
+		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation);
+		
+		return true;
 	}
 
+	// -----------------------------------------------------
+	// loadAllWarpObjects
+	// -----------------------------------------------------
 	public void loadAllWarpObjects() {
 		// check if for warp folder, else create it
 		if (!PlayerWarpGUI.playerWarpHandler.checkWarpFolder()) {
@@ -61,23 +80,19 @@ public class PlayerWarpHandler {
 		}
 
 		File warpsFolder = new File(plugin.warpsFolder);
-		// ArrayList<UUID> returnArray = new ArrayList<UUID>();
-		@SuppressWarnings("unused")
 		String filename = null;
 
 		if (!(warpsFolder.listFiles() == null)) {
 			for (File file : warpsFolder.listFiles()) {
 
 				plugin.getLogger().info(filename);
-				loadWarpYMLFile(file);
+				createObjectFromWarpFile(file);
 
 			}
 		}
 	}
 
-	public void createWarpObjects() {
 
-	}
 
 	// -----------------------------------------------------
 	// createConfigFile
@@ -102,4 +117,8 @@ public class PlayerWarpHandler {
 
 		return true;
 	}
+
+
+
+
 }

@@ -11,6 +11,7 @@ public class PlayerWarpObject {
 	private UUID playerUUID;
 	private String warpLocation;
 	
+	
 	public PlayerWarpObject() {
 	}
 
@@ -19,6 +20,7 @@ public class PlayerWarpObject {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
+		
 		playerWarpObjects.add(this);
 		
 
@@ -55,4 +57,6 @@ public class PlayerWarpObject {
 	public void setWarpLocation(String warpLocation) {
 		this.warpLocation = warpLocation;
 	}
+
+
 }

@@ -3,6 +3,12 @@
 # |   Config.YML Revision 02 by Judgetread    | #
 # +-------------------------------------------+ #
 #################################################
+#
+#
+# {username} gets replaced with players name
+#
+#
+#
 
 #safe warping
 SafeWarp:
@@ -23,8 +29,23 @@ teleport:
   cooldown: 3
   cancelOnMovement: true
 
-
-DefaultWarpIcon: '35:9'
-
 Messages:
-  Prefix: '[PlayerWarpGUI]'
+  prefix: '[PlayerWarpGUI]'
+
+  
+#gui stuff
+GUI:
+  rows: 6
+  nextPageIcon: '35:8'
+  DefaultWarpIcon: '35:9'
+  chestText: 'PlayerWarpGUI'
+  playerWarpText: '&6[username]'
+  
+  
+  
+  
+  
+  
+  
+  
+  

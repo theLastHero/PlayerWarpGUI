@@ -2,13 +2,17 @@ package PlayerWarpGUI;
 
 import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import FileHandlers.ConfigHandler;
 import FileHandlers.PlayerWarpHandler;
+import Listeners.ChestListener;
+import Listeners.CommandListener;
+import Managers.PlayerWarpManager;
+import Objects.chestObject;
 import Utils.NameFetcher;
 
 public class PlayerWarpGUI extends JavaPlugin {
@@ -25,12 +29,18 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static List<String> unsafeBlocks; // list of unsafe blocks to land on
 	public static int cooldown; // cooldown for teleport in seconds
 	public static boolean cancelOnMovement;
+	public static int chestSize;
+	public static String chestText;
 
 	public static String defaultWarpIcon = "35:9"; // defaul icon that will show in the GUI for player warps
+	public static String nextPageIcon = "35:8"; // defaul icon that will show in the GUI for player warps
+	public static String playerWarpText = "&6[username]";
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
 
 	public ConfigHandler configHandler;
 	public static PlayerWarpHandler playerWarpHandler;
+	public static PlayerWarpManager playerWarpManager;
+	public static chestObject chestObject;
 	public static NameFetcher nameFetcher;
 
 	/* (non-Javadoc)
@@ -50,23 +60,16 @@ public class PlayerWarpGUI extends JavaPlugin {
 
 		instance = this;
 		this.configHandler = new ConfigHandler(this);
-		this.playerWarpHandler = new PlayerWarpHandler(this);
+		PlayerWarpGUI.playerWarpHandler = new PlayerWarpHandler(this);
+		PlayerWarpGUI.playerWarpManager = new PlayerWarpManager(this);
+		PlayerWarpGUI.chestObject = new chestObject(this);
+		
+		this.getCommand("playerwarps").setExecutor(new CommandListener());
+		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(), this);
 
 		configHandler.loadConfigFile();
 		playerWarpHandler.loadAllWarpObjects();
-		
-		// load warp files into objects
-		/*
-		 * + check if folder exsists, if not make it
-		 * grab all files in folder that match a uuid name and .yml
-		 * load each file as config and create object for that file
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
+
 
 		
 
