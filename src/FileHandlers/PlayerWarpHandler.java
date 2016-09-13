@@ -39,6 +39,7 @@ public class PlayerWarpHandler {
 		UUID playerUUID = UUID.fromString(file.getName().replace(".yml", ""));
 		String playerName = null;
 		String warpLocation = null;
+		String uuid = null;
 
 		// check if object already exsits
 		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {
@@ -60,6 +61,11 @@ public class PlayerWarpHandler {
 			warpLocation = config.getString("warpDetails.Location");
 			plugin.getLogger().info("   warpLocation" + warpLocation);
 
+			// set warpLocation
+			uuid = config.getString("playerData.UUID");
+			plugin.getLogger().info("   uuid: " + uuid);
+
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

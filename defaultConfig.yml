@@ -38,8 +38,8 @@ GUI:
   rows: 6
   nextPageIcon: '35:8'
   DefaultWarpIcon: '35:9'
-  chestText: 'PlayerWarpGUI'
-  playerWarpText: '&6[username]'
+  chestText: '&2PlayerWarps'
+  playerWarpText: 'Go to &6[username]''s &fwarp'
   
   
   

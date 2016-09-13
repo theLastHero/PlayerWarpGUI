@@ -8,11 +8,31 @@ public class PlayerWarpObject {
 
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
 	
+	 static int UNIQUE_ID = 0;
+	 int uid = ++UNIQUE_ID;
+	
+	/**
+	 * @return the uid
+	 */
+	public int getUid() {
+		return uid;
+	}
+
+
+	/**
+	 * @param uid the uid to set
+	 */
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+
+
 	private UUID playerUUID;
 	private String warpLocation;
 	
 	
-	public PlayerWarpObject() {
+	public int PlayerWarpObject() {
+		return uid;
 	}
 
 	
