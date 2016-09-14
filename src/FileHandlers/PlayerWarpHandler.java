@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -22,32 +23,69 @@ public class PlayerWarpHandler {
 	public PlayerWarpHandler(PlayerWarpGUI playerWarpGUI) {
 		plugin = playerWarpGUI;
 	}
-	
+
 	// -----------------------------------------------------
 	// getPlayer
 	// -----------------------------------------------------
-	public static  ArrayList<PlayerWarpObject> getPlayerWarpObjects() {
+	public static ArrayList<PlayerWarpObject> getPlayerWarpObjects() {
 		return PlayerWarpObject.playerWarpObjects;
+	}
+
+	public static boolean createPlayerWarpFile(UUID uuid){
+		
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString()+".yml");
+
+		playerDataFile.getParentFile().mkdirs();
+		ConfigHandler.copy(plugin.getResource("defaultWarpConfig"), playerDataFile);
+		
+		return true;
+	}
+	
+	// ------------------------------------------------------
+	// savePlayerWarpObject
+	// ------------------------------------------------------
+	public static File savePlayerWarpObject(UUID uuid, Location location) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
+		
+		// save to file
+		FileConfiguration config = new YamlConfiguration();
+		try {
+			config.load(playerDataFile);
+
+			// set warpLocation
+			config.set("warpDetails.Location", PlayerWarpManager.getPlayerWarpManager().loc2str(location));
+
+			// set UUID
+			config.set("playerData.UUID", uuid.toString());
+
+			config.save(playerDataFile);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return playerDataFile;
 	}
 
 	// -----------------------------------------------------
 	// createObjectFromWarpFile
 	// -----------------------------------------------------
 	@SuppressWarnings("unused")
-	public boolean createObjectFromWarpFile(File file) {
+	public static boolean createObjectFromWarpFile(File file) {
 
 		UUID playerUUID = null;
 		String playerName = null;
 		String warpLocation = null;
 		String uuid = null;
 
-		//check if file name is a validate UUID
-		try{
+		// check if file name is a validate UUID
+		try {
 			playerUUID = UUID.fromString(file.getName().replace(".yml", ""));
-		} catch (IllegalArgumentException exception){
+		} catch (IllegalArgumentException exception) {
 			return true;
 		}
-		
+
 		// check if object already exsits
 		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {
 			return true;
@@ -58,29 +96,28 @@ public class PlayerWarpHandler {
 		try {
 
 			config.load(file);
-			//plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
+			// plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
 
 			// set object userName
 			playerName = Bukkit.getServer().getOfflinePlayer(playerUUID).getName();
-			//plugin.getLogger().info("   playerName: " + playerName);
+			// plugin.getLogger().info("   playerName: " + playerName);
 
 			// set warpLocation
 			warpLocation = config.getString("warpDetails.Location");
-			//plugin.getLogger().info("   warpLocation" + warpLocation);
+			// plugin.getLogger().info("   warpLocation" + warpLocation);
 
 			// set warpLocation
 			uuid = config.getString("playerData.UUID");
-			//plugin.getLogger().info("   uuid: " + uuid);
+			// plugin.getLogger().info("   uuid: " + uuid);
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return true;
 		}
 
-		//cretae actual object
+		// cretae actual object
 		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation);
-		
+
 		return true;
 	}
 
@@ -103,8 +140,6 @@ public class PlayerWarpHandler {
 			}
 		}
 	}
-
-
 
 	// -----------------------------------------------------
 	// createConfigFile
@@ -129,8 +164,5 @@ public class PlayerWarpHandler {
 
 		return true;
 	}
-
-
-
 
 }

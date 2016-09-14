@@ -50,11 +50,11 @@ public class ConfigHandler {
 			}
 
 			// load teleport cooldown
-			PlayerWarpGUI.cooldown = config.getInt("teleport.cooldown", 3);
+			PlayerWarpGUI.cooldown = config.getInt("Teleport.cooldown", 3);
 			//plugin.getLogger().info("Setting teleport cooldown to: " + PlayerWarpGUI.cooldown + " seconds");
 			
 			// load cancelOnMovement
-			PlayerWarpGUI.cancelOnMovement = config.getBoolean("teleport.cancelOnMovement", true);
+			PlayerWarpGUI.cancelOnMovement = config.getBoolean("Teleport.cancelOnMovement", true);
 			//plugin.getLogger().info("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
 
 			// load defaultWarpIcon
@@ -76,10 +76,14 @@ public class ConfigHandler {
 			// load chest size
 			PlayerWarpGUI.chestText = config.getString("GUI.chestText", "PlayerWarpGUI");
 			//plugin.getLogger().info("Setting chestText to: " + PlayerWarpGUI.chestText);
-			
+
 			// load player warp text
 			PlayerWarpGUI.playerWarpText = config.getString("GUI.playerWarpText", "&6[username]");
 			//plugin.getLogger().info("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
+			
+			// load setWarpCost
+			PlayerWarpGUI.setWarpCost = config.getInt("Settings.setWarpCost", 0);
+			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
 
 		} catch (Exception e) {
 			e.printStackTrace();

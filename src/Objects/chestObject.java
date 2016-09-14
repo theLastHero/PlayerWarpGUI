@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import Managers.PlayerWarpManager;
 import PlayerWarpGUI.PlayerWarpGUI;
 
 public class chestObject {
@@ -51,7 +53,6 @@ public class chestObject {
 		List<String> loreList = new ArrayList<String>(); 
 		loreList = itemStack.getItemMeta().getLore();
 		int warpID = Integer.parseInt(ChatColor.stripColor(loreList.get(3).replace("Warp ID: ", "")));
-		Bukkit.broadcastMessage("warp id is: "+warpID);
 		
 		return warpID;
 	}
@@ -67,10 +68,10 @@ public class chestObject {
 		
 	}
 	
-	public static String getWarpLocation(int uid){
+	public static Location getWarpLocation(int uid){
 		
 		PlayerWarpObject playerWarpObject = getPlayerWarpObject(uid);
-		return playerWarpObject.getWarpLocation();
+		return PlayerWarpManager.getPlayerWarpManager().str2loc(playerWarpObject.getWarpLocation());
 	
 	}
 	

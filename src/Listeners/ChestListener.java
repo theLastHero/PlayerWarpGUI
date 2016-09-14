@@ -7,6 +7,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import FileHandlers.PlayerWarpHandler;
+import Managers.PlayerWarpManager;
 import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
 
@@ -26,8 +28,11 @@ public class ChestListener implements Listener {
 
 				// get warp ID
 				int warpID = chestObject.getWarpID(e.getCurrentItem());
-				Bukkit.broadcastMessage(chestObject.getWarpLocation(warpID));
+				
+				e.getWhoClicked().teleport(chestObject.getWarpLocation(warpID));
 
+				//close inventory
+				e.getWhoClicked().closeInventory();
 			}
 
 		}

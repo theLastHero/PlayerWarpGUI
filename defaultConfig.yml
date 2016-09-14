@@ -5,7 +5,7 @@
 #################################################
 #
 #
-# {username} gets replaced with players name
+# [username] gets replaced with players name
 #
 #
 #
@@ -23,15 +23,13 @@ SafeWarp:
     - 147
     - 148
 
-
 #teleporting
-teleport:
+Teleport:
   cooldown: 3
   cancelOnMovement: true
 
 Messages:
-  prefix: '[PlayerWarpGUI]'
-
+  prefix: '&6[&aPlayerWarpGUI&6]&f'
   
 #gui stuff
 GUI:
@@ -41,7 +39,8 @@ GUI:
   chestText: '&2PlayerWarps'
   playerWarpText: 'Go to &6[username]''s &fwarp'
   
-  
+Settings:
+  setWarpCost: 0  
   
   
   
