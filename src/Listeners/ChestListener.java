@@ -1,11 +1,20 @@
 package Listeners;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import Managers.PlayerWarpManager;
 import Objects.chestObject;
@@ -13,6 +22,16 @@ import PlayerWarpGUI.PlayerWarpGUI;
 import Utils.A;
 
 public class ChestListener implements Listener {
+
+	public static PlayerWarpGUI plugin;
+	final Map<UUID, BukkitTask> tpQueue = new HashMap<UUID, BukkitTask>();
+
+	// -------------------------------------------------------------------------------------
+	// Constructor
+	// -------------------------------------------------------------------------------------
+	public ChestListener(PlayerWarpGUI playerWarpGUI) {
+		plugin = playerWarpGUI;
+	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onInventoryClick(final InventoryClickEvent e) {
@@ -25,12 +44,11 @@ public class ChestListener implements Listener {
 
 				// cancel event, prevent player from removing the item
 				e.setCancelled(true);
-				Player player = (Player) e.getWhoClicked(); 
+				Player player = (Player) e.getWhoClicked();
 
 				// get warp ID
 				int warpID = chestObject.getWarpID(e.getCurrentItem());
-				
-				
+
 				// do safeWarp checking
 				if (PlayerWarpGUI.useSafeWarp) {
 					// check for beathable air blocks
@@ -38,25 +56,62 @@ public class ChestListener implements Listener {
 						player.sendMessage(A.b(" &4Teleport cancelled, location was unsafe to teleport to.", player.getDisplayName()));
 
 						return;
-						
+
 					}
 				}
-				
-				//check disabled worlds
-				String world = chestObject.getWarpLocation(warpID).getWorld().getName().toString();
-				for(int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++){
-					  if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)){
-							player.sendMessage(A.b(" &4Teleport cancelled, you cannot teleport to that world.", player.getDisplayName()));
-						  return;
-					  }
-					}
-				
-				e.getWhoClicked().teleport(chestObject.getWarpLocation(warpID));
 
-				//close inventory
+				// check disabled worlds
+				String world = chestObject.getWarpLocation(warpID).getWorld().getName().toString();
+				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
+					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
+						player.sendMessage(A.b(" &4Teleport cancelled, you cannot teleport to that world.", player.getDisplayName()));
+						return;
+					}
+				}
+
+				tpQueue.put(player.getUniqueId(), new Teleport(PlayerWarpGUI.cooldown, player.getUniqueId(), chestObject.getWarpLocation(warpID)).runTaskTimer(PlayerWarpGUI.getInstance(), 0, 20));
+
+				// close inventory
 				e.getWhoClicked().closeInventory();
 			}
 
+		}
+	}
+
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent e) {
+		final Player p = e.getPlayer();
+		if (PlayerWarpGUI.cancelOnMovement) {
+			if (tpQueue.containsKey(p.getUniqueId())) {
+				tpQueue.get(p.getUniqueId()).cancel();
+				tpQueue.remove(p.getUniqueId());
+				p.sendMessage(ChatColor.GRAY + "Teleport cancelled.");
+			}
+		}
+	}
+
+	private class Teleport extends BukkitRunnable {
+		int count;
+		UUID player;
+		Location loc;
+
+		Teleport(int count, UUID player, Location loc) {
+			this.count = count;
+			this.player = player;
+			this.loc = loc;
+		}
+
+		@Override
+		public void run() {
+			if (count > 0) {
+				Bukkit.broadcastMessage("count: " + count);
+				count--;
+			} else {
+				// Teleport code here
+				Bukkit.getPlayer(player).teleport(loc);
+				tpQueue.remove(player);
+				this.cancel();
+			}
 		}
 	}
 

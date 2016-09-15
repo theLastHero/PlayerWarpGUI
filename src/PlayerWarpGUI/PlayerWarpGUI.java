@@ -2,7 +2,6 @@ package PlayerWarpGUI;
 
 import java.io.File;
 import java.util.List;
-
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
@@ -10,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import FileHandlers.ConfigHandler;
 import FileHandlers.PlayerWarpHandler;
 import Listeners.ChestListener;
@@ -55,6 +53,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static chestObject chestObject;
 	public static NameFetcher nameFetcher;
 	
+	
 	public static A a;
 
 	/* (non-Javadoc)
@@ -81,7 +80,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 
 		// listeners
 		this.getCommand("playerwarps").setExecutor(new CommandListener());
-		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(plugin), this);
 
 		// load config file data
 		configHandler.loadConfigFile();

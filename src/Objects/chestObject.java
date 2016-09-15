@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import Managers.PlayerWarpManager;
 import PlayerWarpGUI.PlayerWarpGUI;
+import Utils.A;
 
 public class chestObject {
 
@@ -33,11 +34,11 @@ public class chestObject {
 		return new ItemStack(Material.getMaterial(matId));
 	}
 
-	public ItemStack getNextPageItemStack() {
+	public ItemStack getNextPageItemStack(int pageNum) {
 
 		ItemStack nextPageItemstack = parseString(PlayerWarpGUI.nextPageIcon);
 		ItemMeta nextPageMeta = nextPageItemstack.getItemMeta();
-		nextPageMeta.setDisplayName(ChatColor.GREEN + "Next Page: ");
+		nextPageMeta.setDisplayName(ChatColor.GREEN + "Next Page: " + pageNum);
 		nextPageItemstack.setItemMeta(nextPageMeta);
 
 		return nextPageItemstack;
@@ -49,55 +50,116 @@ public class chestObject {
 
 	}
 
-	public static int getWarpID(ItemStack itemStack){
-		List<String> loreList = new ArrayList<String>(); 
+	public static int getWarpID(ItemStack itemStack) {
+		List<String> loreList = new ArrayList<String>();
 		loreList = itemStack.getItemMeta().getLore();
 		int warpID = Integer.parseInt(ChatColor.stripColor(loreList.get(3).replace("Warp ID: ", "")));
-		
+
 		return warpID;
 	}
-	
-	
-	public static PlayerWarpObject getPlayerWarpObject(int uid){
+
+	public static PlayerWarpObject getPlayerWarpObject(int uid) {
 		for (PlayerWarpObject n : PlayerWarpObject.playerWarpObjects) {
 			if (n.getUid() == uid) {
 				return n;
 			}
 		}
 		return null;
-		
+
 	}
-	
-	public static Location getWarpLocation(int uid){
-		
+
+	public static Location getWarpLocation(int uid) {
+
 		PlayerWarpObject playerWarpObject = getPlayerWarpObject(uid);
 		return PlayerWarpManager.getPlayerWarpManager().str2loc(playerWarpObject.getWarpLocation());
-	
+
 	}
-	
-	  public ItemStack setLore(ItemStack item,  ArrayList<String> message) {
-		     ItemMeta meta = item.getItemMeta();
-		     if(meta.hasLore()) {
-		     message.addAll(meta.getLore());
-		     }
-		     meta.setLore(message);
-		     item.setItemMeta(meta);
-		     return item;
-		   }
-	
+
+	public ItemStack setLore(ItemStack item, ArrayList<String> message) {
+		ItemMeta meta = item.getItemMeta();
+		if (meta.hasLore()) {
+			message.addAll(meta.getLore());
+		}
+		meta.setLore(message);
+		item.setItemMeta(meta);
+		return item;
+	}
+
 	@SuppressWarnings({ "unused" })
 	public void openGUI(Player player, int page) {
 
 		int pageNumber = page;
 		int chestSize = PlayerWarpGUI.chestSize;
 		int pageSize = (PlayerWarpGUI.chestSize - 1);
+		int startNum = 0; // decalre variable
+		int pageNum = page; // what page to start from
+		boolean showNext = true; // to show next page icon or not
 
 		// set next page icon
-		ItemStack nextPageItemStack = getNextPageItemStack();
+		ItemStack nextPageItemStack = getNextPageItemStack(page);
 
 		// create inventory
 		Inventory inv = Bukkit.createInventory(null, chestSize, replaceColorVariables(PlayerWarpGUI.chestText));
 
+		
+		// create array list of warps by name from hashmap
+		ArrayList<PlayerWarpObject> playerWarpObjects = PlayerWarpObject.playerWarpObjects;
+		
+		// set start
+		startNum = pageNum * pageSize;
+
+		// calculate loop size
+		int loopSize = startNum + 53;
+
+		// check if page size is smaller then max pageSize
+		// if not then set to actual size, and set showNext to false
+		if (loopSize > (playerWarpObjects.size())) {
+			loopSize = ((playerWarpObjects.size()) - startNum);
+			showNext = false;
+		}
+
+		// loop through all for the page
+		for (int i = 0; i < loopSize; i++) {
+			
+			//
+			String playerWarpText = PlayerWarpGUI.playerWarpText;
+			
+			PlayerWarpObject a = playerWarpObjects.get(i);
+			int b = a.getUid();
+			
+			// fix display name here
+			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
+
+			//
+			String playerIcon = PlayerWarpGUI.defaultWarpIcon;
+			ItemStack playerWarpItemStack = parseString(playerIcon);
+
+			//
+			ArrayList<String> lore = new ArrayList<String>();
+
+			lore.add("");
+			lore.add("");
+			lore.add("");
+			lore.add(ChatColor.DARK_GRAY + "Warp ID: " + b);
+
+			//
+			ItemMeta playerWarpMeta = playerWarpItemStack.getItemMeta();
+			playerWarpMeta.setDisplayName(playerWarpText);
+
+			playerWarpMeta.setLore(lore);
+			playerWarpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+			playerWarpItemStack.setItemMeta(playerWarpMeta);
+
+			// setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
+
+			inv.setItem(i, playerWarpItemStack);
+			i++;
+			
+			
+		}
+	
+		/*
 		int counter = 0;
 		for (PlayerWarpObject wo : PlayerWarpObject.playerWarpObjects) {
 
@@ -116,34 +178,33 @@ public class chestObject {
 			lore.add("");
 			lore.add("");
 			lore.add("");
-			lore.add(ChatColor.DARK_GRAY+"Warp ID: " +wo.uid);
-			
-			
-			
-			
+			lore.add(ChatColor.DARK_GRAY + "Warp ID: " + wo.uid);
+
 			//
 			ItemMeta playerWarpMeta = playerWarpItemStack.getItemMeta();
 			playerWarpMeta.setDisplayName(playerWarpText);
-			
+
 			playerWarpMeta.setLore(lore);
 			playerWarpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		   
-			
+
 			playerWarpItemStack.setItemMeta(playerWarpMeta);
 
-			//setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
+			// setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
 
 			inv.setItem(counter, playerWarpItemStack);
 			counter++;
 
 		}
+		*/
 
-		inv.setItem(pageSize, nextPageItemStack);
+		// if going to show nextPage icon or not
+		if (showNext) {
+			inv.setItem(pageSize, nextPageItemStack);
+		}
+		
 
 		player.openInventory(inv);
 
 	}
-
-	
 
 }

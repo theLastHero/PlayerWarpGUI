@@ -58,15 +58,23 @@ public class PlayerWarpManager {
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
 
-			if (feet.getLocation().add(0, -1, 0).getBlock().getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+			if (feet.getLocation().add(0, -1, 0).getBlock().getRelative(BlockFace.UP).getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
 				return false; // not solid
 			}
 		}
-		
+
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
-			Block blockLandsOn = head;
+			Block blockLandsOn = feet.getRelative(BlockFace.DOWN);
 			if (blockLandsOn.getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+				return false; // not solid
+			}
+		}
+
+		// here check blocks to land on
+		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
+			Material blockLandsOn = feet.getLocation().add(0, 1, 0).getBlock().getType();
+			if (blockLandsOn.equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
 				return false; // not solid
 			}
 		}

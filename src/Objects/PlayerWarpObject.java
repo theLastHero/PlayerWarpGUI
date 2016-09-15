@@ -8,7 +8,7 @@ public class PlayerWarpObject {
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
 
 	static int UNIQUE_ID = 0;
-	int uid = ++UNIQUE_ID;
+	static int uid = ++UNIQUE_ID;
 
 	/**
 	 * @return the uid
@@ -26,7 +26,7 @@ public class PlayerWarpObject {
 	 *            the uid to set
 	 */
 	public void setUid(int uid) {
-		this.uid = uid;
+		PlayerWarpObject.uid = uid;
 	}
 
 	private UUID playerUUID;

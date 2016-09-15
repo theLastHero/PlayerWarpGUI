@@ -12,17 +12,27 @@ public class A {
 
 	
 	public static String b(String str, String playerName){
-		
-		//add prefix
+
+		// add prefix
 		str = PlayerWarpGUI.messagePrefix + str;
-		//replace color codes
+		// replace color codes
 		str = ChatColor.translateAlternateColorCodes('&', str);
-		//replace [username] variable
-		if(!playerName.equals(null)){
+		// replace [username] variable
+		if (!playerName.equals(null)) {
 			str = str.replace("[username]", playerName);
 		}
-		
-		
 		return str;
 	}
+	
+	public static String c(String str, String playerName){
+
+		// replace color codes
+		str = ChatColor.translateAlternateColorCodes('&', str);
+		// replace [username] variable
+		if (!playerName.equals(null)) {
+			str = str.replace("[username]", playerName);
+		}
+		return str;
+	}
+	
 }
