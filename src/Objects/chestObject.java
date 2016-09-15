@@ -23,7 +23,7 @@ public class chestObject {
 	}
 
 	@SuppressWarnings("deprecation")
-	public ItemStack parseString(String itemId) {
+	public static ItemStack parseString(String itemId) {
 		String[] parts = itemId.split(":");
 		int matId = Integer.parseInt(parts[0]);
 		if (parts.length == 2) {
@@ -100,8 +100,6 @@ public class chestObject {
 
 		int counter = 0;
 		for (PlayerWarpObject wo : PlayerWarpObject.playerWarpObjects) {
-
-			Bukkit.broadcastMessage(wo.getPlayerUUID().toString());
 
 			//
 			String playerWarpText = PlayerWarpGUI.playerWarpText;

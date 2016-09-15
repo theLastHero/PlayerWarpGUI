@@ -12,7 +12,7 @@
 
 #safe warping
 SafeWarp:
-  enabled: false
+  enabled: true
   unsafeBlocks:
     - 8
     - 9
@@ -40,7 +40,10 @@ GUI:
   playerWarpText: 'Go to &6[username]''s &fwarp'
   
 Settings:
-  setWarpCost: 0  
+  setWarpCost: 0
+  disabledWorlds:
+    - world_nether
+    - world_the_end
   
   
   

@@ -3,14 +3,13 @@ package Objects;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
 public class PlayerWarpObject {
 
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
-	
-	 static int UNIQUE_ID = 0;
-	 int uid = ++UNIQUE_ID;
-	
+
+	static int UNIQUE_ID = 0;
+	int uid = ++UNIQUE_ID;
+
 	/**
 	 * @return the uid
 	 */
@@ -18,34 +17,33 @@ public class PlayerWarpObject {
 		return uid;
 	}
 
+	public void removePlayerWarpObject(UUID playerUUID) {
+		playerWarpObjects.remove(this);
+	}
 
 	/**
-	 * @param uid the uid to set
+	 * @param uid
+	 *            the uid to set
 	 */
 	public void setUid(int uid) {
 		this.uid = uid;
 	}
 
-
 	private UUID playerUUID;
 	private String warpLocation;
-	
-	
+
 	public PlayerWarpObject() {
-		//return uid;
+		// return uid;
 	}
 
-	
 	public PlayerWarpObject(UUID playerUUID, String warpLocation) {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
-		
+
 		playerWarpObjects.add(this);
-		
 
 	}
-
 
 	/**
 	 * @return the playerUUID
@@ -54,14 +52,13 @@ public class PlayerWarpObject {
 		return playerUUID;
 	}
 
-
 	/**
-	 * @param playerUUID the playerUUID to set
+	 * @param playerUUID
+	 *            the playerUUID to set
 	 */
 	public void setPlayerUUID(UUID playerUUID) {
 		this.playerUUID = playerUUID;
 	}
-
 
 	/**
 	 * @return the warpLocation
@@ -70,13 +67,12 @@ public class PlayerWarpObject {
 		return warpLocation;
 	}
 
-
 	/**
-	 * @param warpLocation the warpLocation to set
+	 * @param warpLocation
+	 *            the warpLocation to set
 	 */
 	public void setWarpLocation(String warpLocation) {
 		this.warpLocation = warpLocation;
 	}
-
 
 }

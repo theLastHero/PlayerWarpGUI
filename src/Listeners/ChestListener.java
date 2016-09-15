@@ -7,10 +7,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import FileHandlers.PlayerWarpHandler;
 import Managers.PlayerWarpManager;
 import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
+import Utils.A;
 
 public class ChestListener implements Listener {
 
@@ -25,9 +25,31 @@ public class ChestListener implements Listener {
 
 				// cancel event, prevent player from removing the item
 				e.setCancelled(true);
+				Player player = (Player) e.getWhoClicked(); 
 
 				// get warp ID
 				int warpID = chestObject.getWarpID(e.getCurrentItem());
+				
+				
+				// do safeWarp checking
+				if (PlayerWarpGUI.useSafeWarp) {
+					// check for beathable air blocks
+					if (!PlayerWarpManager.isSafeLocation(chestObject.getWarpLocation(warpID))) {
+						player.sendMessage(A.b(" &4Teleport cancelled, location was unsafe to teleport to.", player.getDisplayName()));
+
+						return;
+						
+					}
+				}
+				
+				//check disabled worlds
+				String world = chestObject.getWarpLocation(warpID).getWorld().getName().toString();
+				for(int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++){
+					  if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)){
+							player.sendMessage(A.b(" &4Teleport cancelled, you cannot teleport to that world.", player.getDisplayName()));
+						  return;
+					  }
+					}
 				
 				e.getWhoClicked().teleport(chestObject.getWarpLocation(warpID));
 

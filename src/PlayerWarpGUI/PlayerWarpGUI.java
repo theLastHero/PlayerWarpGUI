@@ -17,6 +17,7 @@ import Listeners.ChestListener;
 import Listeners.CommandListener;
 import Managers.PlayerWarpManager;
 import Objects.chestObject;
+import Utils.A;
 import Utils.NameFetcher;
 
 public class PlayerWarpGUI extends JavaPlugin {
@@ -46,12 +47,15 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
 	
 	public static int setWarpCost = 0;	//cost of setting a warp
+	public static List<String> disabledWorlds; // list of unsafe blocks to land on
 
 	public ConfigHandler configHandler;
 	public static PlayerWarpHandler playerWarpHandler;
 	public static PlayerWarpManager playerWarpManager;
 	public static chestObject chestObject;
 	public static NameFetcher nameFetcher;
+	
+	public static A a;
 
 	/* (non-Javadoc)
 	 * @see org.bukkit.plugin.java.JavaPlugin#onDisable()
@@ -73,6 +77,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 		PlayerWarpGUI.playerWarpHandler = new PlayerWarpHandler(this);
 		PlayerWarpGUI.playerWarpManager = new PlayerWarpManager(this);
 		PlayerWarpGUI.chestObject = new chestObject(this);
+		PlayerWarpGUI.a = new A(plugin);
 
 		// listeners
 		this.getCommand("playerwarps").setExecutor(new CommandListener());

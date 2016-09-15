@@ -36,11 +36,20 @@ public class PlayerWarpHandler {
 		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString()+".yml");
 
 		playerDataFile.getParentFile().mkdirs();
-		ConfigHandler.copy(plugin.getResource("defaultWarpConfig"), playerDataFile);
+		ConfigHandler.copy(plugin.getResource("defaultWarpConfig.yml"), playerDataFile);
 		
 		return true;
 	}
 	
+	public static boolean deletePlayerWarpFile(UUID uuid){
+		
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString()+".yml");
+		playerDataFile.delete();
+		//playerDataFile.getParentFile().mkdirs();
+		//ConfigHandler.copy(plugin.getResource("defaultWarpConfig.yml"), playerDataFile);
+		
+		return true;
+	}
 	// ------------------------------------------------------
 	// savePlayerWarpObject
 	// ------------------------------------------------------

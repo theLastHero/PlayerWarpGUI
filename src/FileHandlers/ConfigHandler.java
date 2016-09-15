@@ -80,10 +80,15 @@ public class ConfigHandler {
 			// load player warp text
 			PlayerWarpGUI.playerWarpText = config.getString("GUI.playerWarpText", "&6[username]");
 			//plugin.getLogger().info("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
-			
+
 			// load setWarpCost
 			PlayerWarpGUI.setWarpCost = config.getInt("Settings.setWarpCost", 0);
 			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
+
+			// load disabledWorlds
+			PlayerWarpGUI.disabledWorlds = config.getStringList("Settings.disabledWorlds");
+			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
