@@ -6,6 +6,7 @@ authors: [judgetread]
 website: http://thelasthero.net
 main: PlayerWarpGUI.PlayerWarpGUI
 depend: [Vault]
+softdepend: [GriefPrevention]
 commands:
    playerwarps:
       description: Set and go to player warps.

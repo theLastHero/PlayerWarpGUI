@@ -52,8 +52,15 @@ public class ChestListener implements Listener {
 				if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Next")) {
 
 					// get next page number
-					Scanner in = new Scanner(e.getCurrentItem().getItemMeta().getDisplayName()).useDelimiter("[^0-9]+");
-					int nextPageNum = in.nextInt();
+					Scanner in = null;
+					int nextPageNum;
+					try {
+						in = new Scanner(e.getCurrentItem().getItemMeta().getDisplayName()).useDelimiter("[^0-9]+");
+						nextPageNum = in.nextInt();
+					} finally {
+				        in.close();
+				    }
+					
 					
 					//close inventory
 					e.getWhoClicked().closeInventory();

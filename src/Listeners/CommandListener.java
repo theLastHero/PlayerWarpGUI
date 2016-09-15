@@ -1,8 +1,10 @@
 package Listeners;
 
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,16 +73,27 @@ public class CommandListener implements CommandExecutor {
 						return true;
 					}
 				}
-				
-				//check disabled worlds
+
+				// check disabled worlds
 				String world = player.getWorld().getName().toString();
-				for(int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++){
-					Bukkit.broadcastMessage("pworld: " + world + " dworld: "+ PlayerWarpGUI.disabledWorlds.get(i));
-					  if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)){
-							player.sendMessage(A.b(" &4/pwarp cannot be set in this world", player.getDisplayName()));
-						  return true;
-					  }
+				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
+					Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
+					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
+						player.sendMessage(A.b(" &4/pwarp cannot be set in this world", player.getDisplayName()));
+						return true;
 					}
+				}
+
+				// GriefPrevetion
+				if (PlayerWarpGUI.enableGriefPrevetion == true) {
+					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
+					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(player.getName()))) {
+						player.sendMessage(A.b("&4You can only set warps inside your own claim",player.getDisplayName()));
+						return true;
+
+					}
+
+				}
 
 				// all ok, then set a pwarp
 
@@ -102,20 +115,17 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.b(" &4You do not have permission to access the &6/pwarps delete &4command.", player.getDisplayName()));
 				return true;
 			}
-			
-			if(!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())){
+
+			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
 				player.sendMessage(A.b(" &4You do not have a /pwarp set.", player.getDisplayName()));
 			}
-			
+
 			PlayerWarpManager.removePlayerObject(player.getUniqueId());
 			PlayerWarpHandler.deletePlayerWarpFile(player.getUniqueId());
 			player.sendMessage(A.b(" &4Your /pwarp has been deleted.", player.getDisplayName()));
-			
+
 			return true;
 		}
-		
-		
-		
 
 		return false;
 	}

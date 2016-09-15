@@ -106,29 +106,37 @@ public class chestObject {
 		
 		// set start
 		startNum = pageNum * pageSize;
+		Bukkit.broadcastMessage("startNum: " + startNum);
 
 		// calculate loop size
 		int loopSize = startNum + pageSize;
-
+		Bukkit.broadcastMessage("loopSize: " + loopSize);
+		
 		// check if page size is smaller then max pageSize
 		// if not then set to actual size, and set showNext to false
 		if (loopSize > (playerWarpObjects.size())) {
 			loopSize = ((playerWarpObjects.size()) - startNum);
 			showNext = false;
 		}
+		Bukkit.broadcastMessage("loopSize2: " + loopSize);
 
 		// loop through all for the page
+		//!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!
+		//not showing nextpage icons, something to do with loop size bigger the startnum????
 		for (int i = 0; i < loopSize; i++) {
-			
+			int objNum = startNum + i;
+			Bukkit.broadcastMessage("aaa: " + i);
 			//
 			String playerWarpText = PlayerWarpGUI.playerWarpText;
 			
-			PlayerWarpObject a = playerWarpObjects.get(i);
+			PlayerWarpObject a = playerWarpObjects.get(objNum);
 			int b = a.getUid();
 			
 			// fix display name here
 			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
-
+			//playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
+			
+			
 			//
 			String playerIcon = PlayerWarpGUI.defaultWarpIcon;
 			ItemStack playerWarpItemStack = parseString(playerIcon);

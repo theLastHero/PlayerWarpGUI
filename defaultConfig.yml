@@ -45,7 +45,8 @@ Settings:
     - world_nether
     - world_the_end
   
-  
+GriefPrevetion:
+  enabled: false
   
   
   

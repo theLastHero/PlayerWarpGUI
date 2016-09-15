@@ -88,6 +88,11 @@ public class ConfigHandler {
 			// load disabledWorlds
 			PlayerWarpGUI.disabledWorlds = config.getStringList("Settings.disabledWorlds");
 			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
+
+			// load GriefPrevetion
+			PlayerWarpGUI.enableGriefPrevetion = config.getBoolean("GriefPrevetion.enabled", false);
+			//plugin.getLogger().info("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
+			
 			
 
 		} catch (Exception e) {

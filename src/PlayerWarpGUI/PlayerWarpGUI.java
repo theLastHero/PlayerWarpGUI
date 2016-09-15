@@ -2,6 +2,8 @@ package PlayerWarpGUI;
 
 import java.io.File;
 import java.util.List;
+
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
@@ -9,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import FileHandlers.ConfigHandler;
 import FileHandlers.PlayerWarpHandler;
 import Listeners.ChestListener;
@@ -43,8 +46,10 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String nextPageIcon = "35:8"; // defaul icon that will show in the GUI for player warps
 	public static String playerWarpText = "&6[username]"; // text that displays on icon
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
-	
-	public static int setWarpCost = 0;	//cost of setting a warp
+
+	public static boolean enableGriefPrevetion = false;
+
+	public static int setWarpCost = 0; // cost of setting a warp
 	public static List<String> disabledWorlds; // list of unsafe blocks to land on
 
 	public ConfigHandler configHandler;
@@ -52,8 +57,9 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static PlayerWarpManager playerWarpManager;
 	public static chestObject chestObject;
 	public static NameFetcher nameFetcher;
-	
-	
+
+	public static GriefPrevention gp;
+
 	public static A a;
 
 	/* (non-Javadoc)
@@ -89,6 +95,11 @@ public class PlayerWarpGUI extends JavaPlugin {
 
 		setupEconomy();
 		setupPermissions();
+		
+		//
+		if (enableGriefPrevetion == true) {
+			gp = GriefPrevention.instance;
+		}
 
 	}
 
