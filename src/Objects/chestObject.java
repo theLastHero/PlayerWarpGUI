@@ -34,7 +34,7 @@ public class chestObject {
 		return new ItemStack(Material.getMaterial(matId));
 	}
 
-	public ItemStack getNextPageItemStack(int pageNum) {
+	public static ItemStack getNextPageItemStack(int pageNum) {
 
 		ItemStack nextPageItemstack = parseString(PlayerWarpGUI.nextPageIcon);
 		ItemMeta nextPageMeta = nextPageItemstack.getItemMeta();
@@ -86,7 +86,7 @@ public class chestObject {
 	}
 
 	@SuppressWarnings({ "unused" })
-	public void openGUI(Player player, int page) {
+	public static void openGUI(Player player, int page) {
 
 		int pageNumber = page;
 		int chestSize = PlayerWarpGUI.chestSize;
@@ -96,7 +96,6 @@ public class chestObject {
 		boolean showNext = true; // to show next page icon or not
 
 		// set next page icon
-		ItemStack nextPageItemStack = getNextPageItemStack(page);
 
 		// create inventory
 		Inventory inv = Bukkit.createInventory(null, chestSize, replaceColorVariables(PlayerWarpGUI.chestText));
@@ -109,7 +108,7 @@ public class chestObject {
 		startNum = pageNum * pageSize;
 
 		// calculate loop size
-		int loopSize = startNum + 53;
+		int loopSize = startNum + pageSize;
 
 		// check if page size is smaller then max pageSize
 		// if not then set to actual size, and set showNext to false
@@ -154,7 +153,7 @@ public class chestObject {
 			// setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
 
 			inv.setItem(i, playerWarpItemStack);
-			i++;
+			//i++;
 			
 			
 		}
@@ -199,6 +198,8 @@ public class chestObject {
 
 		// if going to show nextPage icon or not
 		if (showNext) {
+
+			ItemStack nextPageItemStack = getNextPageItemStack(page+1);
 			inv.setItem(pageSize, nextPageItemStack);
 		}
 		

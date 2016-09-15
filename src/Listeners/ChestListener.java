@@ -2,6 +2,7 @@ package Listeners;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -44,7 +45,26 @@ public class ChestListener implements Listener {
 
 				// cancel event, prevent player from removing the item
 				e.setCancelled(true);
+				
 				Player player = (Player) e.getWhoClicked();
+				
+				// was it a next page icon clicked
+				if (e.getCurrentItem().getItemMeta().getDisplayName().contains("Next")) {
+
+					// get next page number
+					Scanner in = new Scanner(e.getCurrentItem().getItemMeta().getDisplayName()).useDelimiter("[^0-9]+");
+					int nextPageNum = in.nextInt();
+					
+					//close inventory
+					e.getWhoClicked().closeInventory();
+					
+					//open new inventory from next page
+					chestObject.openGUI(player, nextPageNum);
+					
+					// exit 
+					return;
+				}
+				
 
 				// get warp ID
 				int warpID = chestObject.getWarpID(e.getCurrentItem());

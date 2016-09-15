@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import FileHandlers.PlayerWarpHandler;
 import Managers.PlayerWarpManager;
+import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
 import Utils.A;
 
@@ -32,7 +33,7 @@ public class CommandListener implements CommandExecutor {
 					player.sendMessage(A.b(" &4You do not have permission to access the &6/pwarps &4command.", player.getDisplayName()));
 					return true;
 				}
-				PlayerWarpGUI.chestObject.openGUI(player, 0);
+				chestObject.openGUI(player, 0);
 
 				return true;
 			}
