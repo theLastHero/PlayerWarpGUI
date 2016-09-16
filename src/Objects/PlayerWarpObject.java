@@ -8,7 +8,7 @@ public class PlayerWarpObject {
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
 
 	static int UNIQUE_ID = 0;
-	static int uid = ++UNIQUE_ID;
+	int uid = ++UNIQUE_ID;
 
 	/**
 	 * @return the uid
@@ -16,6 +16,10 @@ public class PlayerWarpObject {
 	public int getUid() {
 		return uid;
 	}
+	
+    public int hashCode() {
+        return uid;
+    }
 
 	public void removePlayerWarpObject(UUID playerUUID) {
 		playerWarpObjects.remove(this);
@@ -25,15 +29,12 @@ public class PlayerWarpObject {
 	 * @param uid
 	 *            the uid to set
 	 */
-	public void setUid(int uid) {
-		PlayerWarpObject.uid = uid;
-	}
 
 	private UUID playerUUID;
 	private String warpLocation;
 
-	public PlayerWarpObject() {
-		// return uid;
+	public int PlayerWarpObject() {
+		 return uid;
 	}
 
 	public PlayerWarpObject(UUID playerUUID, String warpLocation) {

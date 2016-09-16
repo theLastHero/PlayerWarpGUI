@@ -48,6 +48,9 @@ Settings:
 GriefPrevetion:
   enabled: false
   
+WorldGuard:
+  enabled: false  
+  
   
   
   

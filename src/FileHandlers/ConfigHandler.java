@@ -93,6 +93,10 @@ public class ConfigHandler {
 			PlayerWarpGUI.enableGriefPrevetion = config.getBoolean("GriefPrevetion.enabled", false);
 			//plugin.getLogger().info("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
 			
+			// load enableWorldGuard
+			PlayerWarpGUI.enableWorldGuard = config.getBoolean("WorldGuard.enabled", false);
+			//plugin.getLogger().info("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
+			
 			
 
 		} catch (Exception e) {

@@ -48,6 +48,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
 
 	public static boolean enableGriefPrevetion = false;
+	public static boolean enableWorldGuard = false;
 
 	public static int setWarpCost = 0; // cost of setting a warp
 	public static List<String> disabledWorlds; // list of unsafe blocks to land on
