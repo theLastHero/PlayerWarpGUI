@@ -2,7 +2,6 @@ package Listeners;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +12,8 @@ import Managers.PlayerWarpManager;
 import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
 import Utils.A;
+
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class CommandListener implements CommandExecutor {
 
@@ -75,7 +76,7 @@ public class CommandListener implements CommandExecutor {
 				// check disabled worlds
 				String world = player.getWorld().getName().toString();
 				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
-					Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
+					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
 					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
 						player.sendMessage(A.b(" &4/pwarp cannot be set in this world", player.getDisplayName()));
 						return true;
@@ -83,14 +84,36 @@ public class CommandListener implements CommandExecutor {
 				}
 
 				// GriefPrevetion
-				if (PlayerWarpGUI.enableGriefPrevetion == true) {
+				if ((PlayerWarpGUI.enableGriefPrevetion == true) && (PlayerWarpGUI.gp.isEnabled())) {
 					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
 					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(player.getName()))) {
-						player.sendMessage(A.b("&4You can only set warps inside your own claim",player.getDisplayName()));
+						player.sendMessage(A.b("&4You can only set warps inside your own claim", player.getDisplayName()));
 						return true;
 
 					}
 
+				}
+
+				// WorldGuard
+				// !!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!
+				if ((PlayerWarpGUI.enableWorldGuard == true)) {
+					
+					int count = 0;
+					boolean owner = false;
+					
+					for (ProtectedRegion r : PlayerWarpGUI.wg.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation())) {
+					count++;
+
+						if (r.getOwners().contains(player.getUniqueId()) || r.getMembers().contains(player.getUniqueId())) {
+							owner = true;
+						}
+
+					}
+					
+					if ((count == 0) || (owner == false)){
+						player.sendMessage(A.b("&4You must be a owner or member of the region to set a /pwarp here.", player.getDisplayName()));
+						return false;
+					}
 				}
 
 				// all ok, then set a pwarp
@@ -116,6 +139,7 @@ public class CommandListener implements CommandExecutor {
 
 			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
 				player.sendMessage(A.b(" &4You do not have a /pwarp set.", player.getDisplayName()));
+				return true;
 			}
 
 			PlayerWarpManager.removePlayerObject(player.getUniqueId());
@@ -127,4 +151,5 @@ public class CommandListener implements CommandExecutor {
 
 		return false;
 	}
+
 }

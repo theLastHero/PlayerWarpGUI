@@ -19,7 +19,9 @@ import Listeners.CommandListener;
 import Managers.PlayerWarpManager;
 import Objects.chestObject;
 import Utils.A;
-import Utils.NameFetcher;
+
+import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 public class PlayerWarpGUI extends JavaPlugin {
 
@@ -57,9 +59,9 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static PlayerWarpHandler playerWarpHandler;
 	public static PlayerWarpManager playerWarpManager;
 	public static chestObject chestObject;
-	public static NameFetcher nameFetcher;
 
 	public static GriefPrevention gp;
+	public static WorldGuardPlugin wg;
 
 	public static A a;
 
@@ -102,6 +104,9 @@ public class PlayerWarpGUI extends JavaPlugin {
 			gp = GriefPrevention.instance;
 		}
 
+		if (enableWorldGuard == true) {
+			wg = WGBukkit.getPlugin();
+		}
 	}
 
 	private boolean setupEconomy() {
