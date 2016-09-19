@@ -133,6 +133,8 @@ public class chestObject {
 			int b = a.getUid();
 			
 			// fix display name here
+			//Bukkit.broadcastMessage( Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName() + "" + a.getPlayerUUID().toString());
+			
 			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
 			//playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
 			

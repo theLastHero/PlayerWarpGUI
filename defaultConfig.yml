@@ -4,13 +4,19 @@
 # +-------------------------------------------+ #
 #################################################
 #
-#
-# [username] gets replaced with players name
-#
-#
-#
+# Use [username] to display the players name in any
+# of the text/messages.
 
-#safe warping
+
+# +--------------+#
+# | Safe warping |#
+# +--------------+#
+# enabled: Safe warping checks that there is to breathable air blocks
+#          where the player will land, to avoid suffocation
+#
+# unsafeBlock: Blocks a player's teleport will be denied to, if they 
+#              were to land on any of the blocks listed. eg: lava, 
+#              water, hopper. Only checks is SafeWarp is true.
 SafeWarp:
   enabled: true
   unsafeBlocks:
@@ -23,15 +29,45 @@ SafeWarp:
     - 147
     - 148
 
-#teleporting
+
+# +--------------+#
+# | Teleporting |#
+# +--------------+#
+# cooldown: the time in seconds before a player will be teleported
+#
+# cancelOnMovement: If a player moves during the cooldown period
+#                   the teleport will be canceled
 Teleport:
   cooldown: 3
   cancelOnMovement: true
 
+
+# +----------+#
+# | Messages |#
+# +----------+#
+# prefix: Text that wil be displayed before every message sent
+#         from this plugin.
 Messages:
-  prefix: '&6[&aPlayerWarpGUI&6]&f'
-  
-#gui stuff
+  prefix: '&6[&aPlayerWarpGUI&6] &f'
+
+
+# +-----+#
+# | GUI |#
+# +-----+#
+# rows: the number of inventory rows that will be displayed when 
+#       displayed warps. Total number of warps listed at a time will
+#       be number of (rows * 9) eg: rows: 6 will be (6 * 9) = 54, so 54
+#       warps will be shown per page.
+#
+# nextPageIcon: What icon/material to show in /pwarp as the next page
+#               icon. Use minecraft ID. eg '35:8' will be grey wool.
+#
+# DefaultWarpIcon: What icon will show as a player warp icon.
+#
+# chestText: Text that will be displayed as the /pwarp inventory title.
+#
+# playerWarpText: Text that will be displayed when you hover over a
+#                 playerWarp icon.
 GUI:
   rows: 6
   nextPageIcon: '35:8'
@@ -39,15 +75,36 @@ GUI:
   chestText: '&2PlayerWarps'
   playerWarpText: 'Go to &6[username]''s &fwarp'
   
+
+# +----------+#
+# | Settings |#
+# +----------+#
+# setWarpCost: How much currency it will cost to set a /pwarp
+#
+# disabledWorlds: Any world listed, players will not be able to
+#                  set a /pwarp in those worlds
 Settings:
   setWarpCost: 0
   disabledWorlds:
     - world_nether
     - world_the_end
-  
+
+# +----------------+#
+# | GriefPrevetion |#
+# +----------------+#
+# enabled: Use GriefPrevetion support. When true players can
+#          only set a /pwarp in a claim they OWN. Set to false
+#          if you do not use GriefPrevetion plugin on your server.
 GriefPrevetion:
   enabled: false
-  
+
+
+# +------------+#
+# | WorldGuard |#
+# +------------+#
+# enabled: Use WorldGuard region support. When true players can only
+#          set a /pwarp in a region they are either a owner or member
+#          of. 
 WorldGuard:
   enabled: false  
   
