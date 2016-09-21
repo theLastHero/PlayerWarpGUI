@@ -111,6 +111,10 @@ public class ConfigHandler {
 			PlayerWarpGUI.DEBUG_MODE = config.getBoolean("Settings.debug_mode", false);
 			A.d("Setting debug_mode to: " + PlayerWarpGUI.DEBUG_MODE);
 			
+			// load maxTitleSize
+			PlayerWarpGUI.maxTitleSize = config.getInt("Settings.maxTitleSize", 25);
+			A.d("Setting maxTitleSize to: " + PlayerWarpGUI.maxTitleSize);
+			
 			
 
 		} catch (Exception e) {

@@ -91,6 +91,7 @@ Settings:
     - world_nether
     - world_the_end
   debugg_mode: false
+  maxTitleSize: 25
 
 # +----------------+#
 # | GriefPrevetion |#

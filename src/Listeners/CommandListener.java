@@ -202,6 +202,11 @@ public class CommandListener implements CommandExecutor {
 
 			String title = sb.toString();
 			//Bukkit.broadcastMessage(title);
+			
+			if(title.length() > PlayerWarpGUI.maxTitleSize){
+				player.sendMessage(A.b(" &aYour title is too long, you are limited to &6"+PlayerWarpGUI.maxTitleSize +" &acharacters", player.getDisplayName()));	
+				return true;
+			}
 
 			PlayerWarpGUI.playerWarpManager.updatePlayerObjectTitle(player.getUniqueId(), title);
 			player.sendMessage(A.b(" &aYour title has been set to " + title, player.getDisplayName()));

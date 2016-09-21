@@ -44,6 +44,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static boolean cancelOnMovement; // cancel teleport if player moves
 	public static int chestSize; // size o fthe chest to open
 	public static String chestText; // text on the chest that opens
+	public static int maxTitleSize = 25;
 
 	public static String defaultWarpIcon = "35:9"; // defaul icon that will show in the GUI for player warps
 	public static String nextPageIcon = "35:8"; // defaul icon that will show in the GUI for player warps
