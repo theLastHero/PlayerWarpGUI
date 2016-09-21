@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import FileHandlers.PlayerWarpHandler;
 import Managers.PlayerWarpManager;
@@ -176,6 +177,7 @@ public class CommandListener implements CommandExecutor {
 		}
 
 		// Set a title
+		//------------
 		if ((args.length >= 2) && (args[0].equalsIgnoreCase("title"))) {
 
 			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
@@ -199,13 +201,42 @@ public class CommandListener implements CommandExecutor {
 			}
 
 			String title = sb.toString();
-			Bukkit.broadcastMessage(title);
+			//Bukkit.broadcastMessage(title);
 
 			PlayerWarpGUI.playerWarpManager.updatePlayerObjectTitle(player.getUniqueId(), title);
 			player.sendMessage(A.b(" &aYour title has been set to " + title, player.getDisplayName()));
 
 			return true;
 		}
+		
+		// Set a icon
+		//------------
+		
+		if ((args.length >= 1) && (args[0].equalsIgnoreCase("icon"))) {
+
+			ItemStack newIcon = null;
+			
+			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setIcon")) {
+				player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps icon &acommand.", player.getDisplayName()));
+				return true;
+			}
+
+			if(player.getItemInHand() == null){
+				player.sendMessage(A.b(" &aYou must be holding the item in your hand to use the  &6/pwarps icon &acommand.", player.getDisplayName()));
+				return true;
+			}
+			
+			newIcon = player.getItemInHand();
+			int iconID = newIcon.getTypeId();
+			int iconData = newIcon.getData().getData();
+			String newIconString = ""+iconID+":"+iconData;
+			
+			PlayerWarpGUI.playerWarpManager.updatePlayerObjectIcon(player.getUniqueId(), newIconString);
+			player.sendMessage(A.b(" &aYour icon has been changed", player.getDisplayName()));
+
+			return true;
+		}
+	
 
 		// ADMIN =============================================================================================
 		if (args.length == 2) {

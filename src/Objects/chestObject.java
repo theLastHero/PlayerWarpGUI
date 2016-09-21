@@ -94,6 +94,7 @@ public class chestObject {
 		int startNum = 0; // decalre variable
 		int pageNum = page; // what page to start from
 		boolean showNext = true; // to show next page icon or not
+		String icon = null;
 
 		// set next page icon
 
@@ -137,21 +138,27 @@ public class chestObject {
 			} else {
 				playerWarpText = a.getTitle();
 			}
-			// fix display name here
-			//Bukkit.broadcastMessage( Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName() + "" + a.getPlayerUUID().toString());
-			
 
-			String icon = "";
 			String title = a.getTitle();
 			boolean enabled = true;
 			
 			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
 			//playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
-			
-			
-			//
+
+			//warp icon
 			String playerIcon = PlayerWarpGUI.defaultWarpIcon;
+			
+			icon  = playerIcon;
+			if ((a.getIcon()  == null) || (a.getIcon().length() == 0)) {
+				
+			} else {
+				playerIcon = a.getIcon();
+			}
+			
+
 			ItemStack playerWarpItemStack = parseString(playerIcon);
+			//
+			
 
 			//
 			ArrayList<String> lore = new ArrayList<String>();

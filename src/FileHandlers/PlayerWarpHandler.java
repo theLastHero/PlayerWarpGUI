@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import Managers.PlayerWarpManager;
 import Objects.PlayerWarpObject;
@@ -81,7 +82,30 @@ public class PlayerWarpHandler {
 	}
 	
 	// ------------------------------------------------------
-	// savePlayerWarpObject
+	// updateIcon
+	// ------------------------------------------------------
+	public static File updateIcon(UUID uuid, String icon) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
+		
+		// save to file
+		FileConfiguration config = new YamlConfiguration();
+		try {
+			config.load(playerDataFile);
+			
+			config.set("warpDetails.icon", icon);
+
+			config.save(playerDataFile);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return playerDataFile;
+	}
+	
+	// ------------------------------------------------------
+	// updateTitle
 	// ------------------------------------------------------
 	public static File updateTitle(UUID uuid, String title) {
 
@@ -168,7 +192,7 @@ public class PlayerWarpHandler {
 		}
 
 		// cretae actual object
-		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation, title);
+		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation, title, icon);
 
 		return true;
 	}

@@ -3,6 +3,8 @@ package Objects;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.inventory.ItemStack;
+
 public class PlayerWarpObject {
 
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
@@ -33,6 +35,7 @@ public class PlayerWarpObject {
 	private UUID playerUUID;
 	private String warpLocation;
 	private String title;
+	private String icon;
 
 	/**
 	 * @return the title
@@ -52,11 +55,12 @@ public class PlayerWarpObject {
 		 return uid;
 	}
 
-	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title) {
+	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title, String icon) {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
 		this.setTitle(title);
+		this.setIcon(icon);
 		
 		playerWarpObjects.add(this);
 
@@ -90,6 +94,20 @@ public class PlayerWarpObject {
 	 */
 	public void setWarpLocation(String warpLocation) {
 		this.warpLocation = warpLocation;
+	}
+
+	/**
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return icon;
+	}
+
+	/**
+	 * @param icon the icon to set
+	 */
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 }

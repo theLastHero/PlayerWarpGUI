@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.inventory.ItemStack;
 
 import FileHandlers.PlayerWarpHandler;
 import Objects.PlayerWarpObject;
@@ -98,17 +99,26 @@ public class PlayerWarpManager {
 		playerWarpObject.removePlayerWarpObject(playerUUID);
 		playerWarpObject = null;
 	}
-	
+
 	// ------------------------------------------------------
-	// removePlayerObject
+	// updatePlayerObjectIcon
+	// ------------------------------------------------------
+	public void updatePlayerObjectIcon(UUID playerUUID, String icon) {
+		if (getPlayerWarpObject(playerUUID) != null) {
+			PlayerWarpObject a = getPlayerWarpObject(playerUUID);
+			a.setIcon(icon);
+			PlayerWarpHandler.updateIcon(playerUUID, icon);
+		}
+	}
+
+	// ------------------------------------------------------
+	// updatePlayerObjectTitle
 	// ------------------------------------------------------
 	public void updatePlayerObjectTitle(UUID playerUUID, String title) {
-		if(getPlayerWarpObject(playerUUID) != null){
+		if (getPlayerWarpObject(playerUUID) != null) {
 			PlayerWarpObject a = getPlayerWarpObject(playerUUID);
 			a.setTitle(title);
 			PlayerWarpHandler.updateTitle(playerUUID, title);
-		} else {
-			Bukkit.broadcastMessage("nope");
 		}
 	}
 
@@ -154,8 +164,8 @@ public class PlayerWarpManager {
 	// -----------------------------------------------------
 	// createWarpObjects
 	// -----------------------------------------------------
-	public void createWarpObjects(UUID playerUUID, String warpLocation, String title) {
-		new PlayerWarpObject(playerUUID, warpLocation, title);
+	public void createWarpObjects(UUID playerUUID, String warpLocation, String title, String icon) {
+		new PlayerWarpObject(playerUUID, warpLocation, title, icon);
 	}
 
 	public Location parseLoc(String str) {
