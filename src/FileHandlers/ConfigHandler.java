@@ -9,21 +9,22 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import PlayerWarpGUI.PlayerWarpGUI;
+import Utils.A;
 
 public class ConfigHandler {
 
 	public static PlayerWarpGUI plugin;
 
-	// -------------------------------------------------------------------------------------
-	// Constructor
-	// -------------------------------------------------------------------------------------
+	// +-------------------------------------------------------------------------------------
+	// | Constructor
+	// +-----------------------------------------------------------------------------------
 	public ConfigHandler(PlayerWarpGUI playerWarpGUI) {
 		plugin = playerWarpGUI;
 	}
 
-	// -----------------------------------------------------
-	// loadConfigFile
-	// -----------------------------------------------------
+	// +-----------------------------------------------------
+	// | loadConfigFile
+	// +-----------------------------------------------------
 	public void loadConfigFile() {
 
 		// check if config file exsists else make it
@@ -38,65 +39,77 @@ public class ConfigHandler {
 
 			// load useSafeWarp
 			PlayerWarpGUI.useSafeWarp = config.getBoolean("SafeWarp.enabled", false);
-			//plugin.getLogger().info("Setting useSafeWarp to: " + String.valueOf(PlayerWarpGUI.useSafeWarp));
+			A.d("Setting useSafeWarp to: " + String.valueOf(PlayerWarpGUI.useSafeWarp));
 
 			// load unsafeBlocks
 			PlayerWarpGUI.unsafeBlocks = config.getStringList("SafeWarp.unsafeBlocks");
-			//plugin.getLogger().info("unSafeBlocks: ");
+			A.d("unSafeBlocks: ");
 
 			// print out unsafeBlocks
 			int theTotalNumberOfElements = PlayerWarpGUI.unsafeBlocks.size();
 			for (int counter = 0; counter < theTotalNumberOfElements; counter++) {
-				plugin.getLogger().info("    " + PlayerWarpGUI.unsafeBlocks.get(counter));
+				A.d("    " + PlayerWarpGUI.unsafeBlocks.get(counter));
 			}
 
 			// load teleport cooldown
 			PlayerWarpGUI.cooldown = config.getInt("Teleport.cooldown", 3);
-			//plugin.getLogger().info("Setting teleport cooldown to: " + PlayerWarpGUI.cooldown + " seconds");
+			A.d("Setting teleport cooldown to: " + PlayerWarpGUI.cooldown + " seconds");
 			
 			// load cancelOnMovement
 			PlayerWarpGUI.cancelOnMovement = config.getBoolean("Teleport.cancelOnMovement", true);
-			//plugin.getLogger().info("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
+			A.d("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
 
 			// load defaultWarpIcon
 			PlayerWarpGUI.defaultWarpIcon = config.getString("GUI.DefaultWarpIcon", "35:9");
-			//plugin.getLogger().info("Setting defaultWarpIcon to: " + PlayerWarpGUI.defaultWarpIcon);
+			A.d("Setting defaultWarpIcon to: " + PlayerWarpGUI.defaultWarpIcon);
 			
 			// load nextPageIcon
 			PlayerWarpGUI.nextPageIcon = config.getString("GUI.nextPageIcon", "35:8");
-			//plugin.getLogger().info("Setting nextPageIcon to: " + PlayerWarpGUI.nextPageIcon);
+			A.d("Setting nextPageIcon to: " + PlayerWarpGUI.nextPageIcon);
 
 			// load messagePrefix
 			PlayerWarpGUI.messagePrefix = config.getString("Messages.prefix", "[PlayerWarpGUI]");
-			//plugin.getLogger().info("Setting messagePrefix to: " + PlayerWarpGUI.messagePrefix);
+			A.d("Setting messagePrefix to: " + PlayerWarpGUI.messagePrefix);
 
 			// load chest size
 			PlayerWarpGUI.chestSize = (config.getInt("GUI.rows") * 9);
-			//plugin.getLogger().info("Setting chestSize: " + PlayerWarpGUI.chestSize);
+			A.d("Setting chestSize: " + PlayerWarpGUI.chestSize);
 
 			// load chest size
 			PlayerWarpGUI.chestText = config.getString("GUI.chestText", "PlayerWarpGUI");
-			//plugin.getLogger().info("Setting chestText to: " + PlayerWarpGUI.chestText);
+			A.d("Setting chestText to: " + PlayerWarpGUI.chestText);
 
 			// load player warp text
 			PlayerWarpGUI.playerWarpText = config.getString("GUI.playerWarpText", "&6[username]");
-			//plugin.getLogger().info("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
+			A.d("Setting playerWarpText to: " + PlayerWarpGUI.playerWarpText);
 
 			// load setWarpCost
 			PlayerWarpGUI.setWarpCost = config.getInt("Settings.setWarpCost", 0);
-			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
+			A.d("Setting setWarpCost to: " + Integer.toString(PlayerWarpGUI.setWarpCost));
 
 			// load disabledWorlds
 			PlayerWarpGUI.disabledWorlds = config.getStringList("Settings.disabledWorlds");
-			//plugin.getLogger().info("Setting setWarpCost to: " + Integer.ParseString(PlayerWarpGUI.setWarpCost));
+			A.d("Setting setWarpCost to: " + Integer.toString(PlayerWarpGUI.setWarpCost));
 
 			// load GriefPrevetion
 			PlayerWarpGUI.enableGriefPrevetion = config.getBoolean("GriefPrevetion.enabled", false);
-			//plugin.getLogger().info("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
-			
+			A.d("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
+
 			// load enableWorldGuard
 			PlayerWarpGUI.enableWorldGuard = config.getBoolean("WorldGuard.enabled", false);
-			//plugin.getLogger().info("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
+			A.d("Setting enableWorldGuardto: " + PlayerWarpGUI.enableWorldGuard);
+
+			// load enableWorldGuard
+			PlayerWarpGUI.useOwners = config.getBoolean("WorldGuard.enabled", false);
+			A.d("Setting owners to: " + PlayerWarpGUI.useOwners);
+
+			// load enableWorldGuard
+			PlayerWarpGUI.useMembers = config.getBoolean("WorldGuard.enabled", false);
+			A.d("Setting members to: " + PlayerWarpGUI.useMembers);
+			
+			// load debug_mode
+			PlayerWarpGUI.DEBUG_MODE = config.getBoolean("Settings.debug_mode", false);
+			A.d("Setting debug_mode to: " + PlayerWarpGUI.DEBUG_MODE);
 			
 			
 
@@ -111,9 +124,10 @@ public class ConfigHandler {
 	// -----------------------------------------------------
 	public void createConfigFile() {
 		File configFile = new File(plugin.configFile);
-
-		configFile.getParentFile().mkdirs();
-		copy(plugin.getResource(plugin.defaultConfigFile), configFile);
+		
+			configFile.getParentFile().mkdirs();
+			copy(plugin.getResource(plugin.defaultConfigFile), configFile);
+		
 
 	}
 

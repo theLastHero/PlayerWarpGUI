@@ -83,11 +83,14 @@ GUI:
 #
 # disabledWorlds: Any world listed, players will not be able to
 #                  set a /pwarp in those worlds
+#
+# debug_mode: will spam console with all sorts of data
 Settings:
   setWarpCost: 0
   disabledWorlds:
     - world_nether
     - world_the_end
+  debugg_mode: false
 
 # +----------------+#
 # | GriefPrevetion |#
@@ -106,7 +109,9 @@ GriefPrevetion:
 #          set a /pwarp in a region they are either a owner or member
 #          of. 
 WorldGuard:
-  enabled: false  
+  enabled: false
+  owners: true
+  members: true
   
   
   

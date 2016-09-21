@@ -32,16 +32,32 @@ public class PlayerWarpObject {
 
 	private UUID playerUUID;
 	private String warpLocation;
+	private String title;
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public int PlayerWarpObject() {
 		 return uid;
 	}
 
-	public PlayerWarpObject(UUID playerUUID, String warpLocation) {
+	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title) {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
-
+		this.setTitle(title);
+		
 		playerWarpObjects.add(this);
 
 	}

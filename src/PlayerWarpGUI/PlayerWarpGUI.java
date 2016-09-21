@@ -36,7 +36,8 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public String defaultConfigFile = "defaultConfig.yml";
 	public String defaultWarpConfigFile = "defaultWarpConfig.yml";
 
-	//
+	public static boolean DEBUG_MODE = true;	//prints all sorts of inf to console
+	
 	public static boolean useSafeWarp; // wether to check for safe warps when setting and teleporting to
 	public static List<String> unsafeBlocks; // list of unsafe blocks to land on
 	public static int cooldown; // cooldown for teleport in seconds
@@ -49,8 +50,10 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String playerWarpText = "&6[username]"; // text that displays on icon
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
 
-	public static boolean enableGriefPrevetion = false;
-	public static boolean enableWorldGuard = false;
+	public static boolean enableGriefPrevetion = false;	//use grief preveyion
+	public static boolean enableWorldGuard = false;		//use worldguard
+	public static boolean useOwners = true;	//owners can set warps
+	public static boolean useMembers = true;	//members can set warps
 
 	public static int setWarpCost = 0; // cost of setting a warp
 	public static List<String> disabledWorlds; // list of unsafe blocks to land on

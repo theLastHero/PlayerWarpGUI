@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import FileHandlers.PlayerWarpHandler;
 import Objects.PlayerWarpObject;
 import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
@@ -97,6 +98,19 @@ public class PlayerWarpManager {
 		playerWarpObject.removePlayerWarpObject(playerUUID);
 		playerWarpObject = null;
 	}
+	
+	// ------------------------------------------------------
+	// removePlayerObject
+	// ------------------------------------------------------
+	public void updatePlayerObjectTitle(UUID playerUUID, String title) {
+		if(getPlayerWarpObject(playerUUID) != null){
+			PlayerWarpObject a = getPlayerWarpObject(playerUUID);
+			a.setTitle(title);
+			PlayerWarpHandler.updateTitle(playerUUID, title);
+		} else {
+			Bukkit.broadcastMessage("nope");
+		}
+	}
 
 	// ------------------------------------------------------
 	// getPlayerWarpObject
@@ -140,8 +154,8 @@ public class PlayerWarpManager {
 	// -----------------------------------------------------
 	// createWarpObjects
 	// -----------------------------------------------------
-	public void createWarpObjects(UUID playerUUID, String warpLocation) {
-		new PlayerWarpObject(playerUUID, warpLocation);
+	public void createWarpObjects(UUID playerUUID, String warpLocation, String title) {
+		new PlayerWarpObject(playerUUID, warpLocation, title);
 	}
 
 	public Location parseLoc(String str) {

@@ -9,4 +9,13 @@ playerData:
   playerName:
 
 warpDetails:
-  Location:
+  location:
+  icon:
+  title:
+  lore:
+    - ''
+    - ''
+    - ''
+    
+settings:
+  enabled:

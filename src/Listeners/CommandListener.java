@@ -20,6 +20,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class CommandListener implements CommandExecutor {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -32,21 +33,24 @@ public class CommandListener implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("playerwarps")) {
 
 			// help menu
-			if ((args.length == 1) || (args[0].equalsIgnoreCase("help"))) {
-				
+			if ((args.length == 1) && (args[0].equalsIgnoreCase("help"))) {
 
 				player.sendMessage(A.c(" &7------------------ &8[&6PlayerWarps&8] &7---------------", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps list  &aview all playerWarps", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
-				
+
+				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
+					player.sendMessage(A.c(" &f/pwarps title Your title text  &Change the title of your PlayerWarp.", player.getDisplayName()));
+				}
+
 				if (PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp.others")) {
 					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
 					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp", player.getDisplayName()));
 				}
 
 				player.sendMessage(A.c(" &7-----------------------------------------------", player.getDisplayName()));
-				
+
 				return true;
 			}
 
@@ -81,7 +85,7 @@ public class CommandListener implements CommandExecutor {
 
 				// check if already has a pwarp
 				if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
-					player.sendMessage(A.b(" &aYou already have a &6/pwarp&a, you must delete it before etting a new &6/pwarp", player.getDisplayName()));
+					player.sendMessage(A.b(" &aYou already have a &6/pwarp&a, you must delete it before setting a new &6/pwarp", player.getDisplayName()));
 					return true;
 				}
 
@@ -171,6 +175,38 @@ public class CommandListener implements CommandExecutor {
 			return true;
 		}
 
+		// Set a title
+		if ((args.length >= 2) && (args[0].equalsIgnoreCase("title"))) {
+
+			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
+				player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps title &acommand.", player.getDisplayName()));
+				return true;
+			}
+
+			if (args.length == 2) {
+				player.sendMessage(A.b(" &aUsage: &6/pwarps title &aYour title text.", player.getDisplayName()));
+			}
+
+			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
+				player.sendMessage(A.b(" &aYou do not have a &6/pwarp &ato set a title for.", player.getDisplayName()));
+				return true;
+			}
+
+			StringBuilder sb = new StringBuilder(); // Creating a new instance of StringBuilder
+			for (int i = 1; i < args.length; i++) { // Basic for loop, going through the arguments starting from 1
+				sb.append(args[i]); // Adds the argument into the StringBuilder
+				sb.append(" "); // Adding a space into the StringBuilder
+			}
+
+			String title = sb.toString();
+			Bukkit.broadcastMessage(title);
+
+			PlayerWarpGUI.playerWarpManager.updatePlayerObjectTitle(player.getUniqueId(), title);
+			player.sendMessage(A.b(" &aYour title has been set to " + title, player.getDisplayName()));
+
+			return true;
+		}
+
 		// ADMIN =============================================================================================
 		if (args.length == 2) {
 
@@ -182,17 +218,17 @@ public class CommandListener implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("delete")) {
 
 				UUID otherUUID;
+				// otherUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
 
-				try {
-					otherUUID = Bukkit.getPlayer(args[1]).getUniqueId();
-					Bukkit.broadcastMessage(otherUUID.toString());
-				} catch (Exception e) {
-					player.sendMessage(A.b(" &aNo such player found.", player.getDisplayName()));
+				if (Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore() == true) {
+					otherUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
+				} else {
+					player.sendMessage(A.b(" &aPlayer &6 [username] &anot found.", args[1]));
 					return true;
 				}
 
 				if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(otherUUID)) {
-					player.sendMessage(A.b(" &aPlayer &b[username] does not have a &6/pwarp &aset.", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(" &aPlayer &b[username] &adoes not have a &6/pwarp &aset.", Bukkit.getOfflinePlayer(otherUUID).getName()));
 					return true;
 				}
 
@@ -208,11 +244,10 @@ public class CommandListener implements CommandExecutor {
 
 				UUID otherUUID;
 
-				try {
-					otherUUID = Bukkit.getPlayer(args[1]).getUniqueId();
-					Bukkit.broadcastMessage(otherUUID.toString());
-				} catch (Exception e) {
-					player.sendMessage(A.b(" &aNo such player found.", player.getDisplayName()));
+				if (Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore() == true) {
+					otherUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
+				} else {
+					player.sendMessage(A.b(" &aPlayer &6 [username] &anot found.", args[1]));
 					return true;
 				}
 

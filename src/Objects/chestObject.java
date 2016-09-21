@@ -127,13 +127,23 @@ public class chestObject {
 			int objNum = startNum + i;
 			//Bukkit.broadcastMessage("aaa: " + objNum);
 			//
-			String playerWarpText = PlayerWarpGUI.playerWarpText;
 			
 			PlayerWarpObject a = playerWarpObjects.get(objNum);
 			int b = a.getUid();
 			
+			String playerWarpText = PlayerWarpGUI.playerWarpText;
+			if ((a.getTitle()  == null) || (a.getTitle().length() == 0)) {
+				
+			} else {
+				playerWarpText = a.getTitle();
+			}
 			// fix display name here
 			//Bukkit.broadcastMessage( Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName() + "" + a.getPlayerUUID().toString());
+			
+
+			String icon = "";
+			String title = a.getTitle();
+			boolean enabled = true;
 			
 			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
 			//playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
@@ -146,7 +156,8 @@ public class chestObject {
 			//
 			ArrayList<String> lore = new ArrayList<String>();
 
-			lore.add(playerWarpObjects.get(objNum).getWarpLocation());
+			//lore.add(playerWarpObjects.get(objNum).getWarpLocation());
+			lore.add("");
 			lore.add("");
 			lore.add("");
 			lore.add(ChatColor.DARK_GRAY + "Warp ID: " + b);
@@ -167,44 +178,6 @@ public class chestObject {
 			
 			
 		}
-	
-		/*
-		int counter = 0;
-		for (PlayerWarpObject wo : PlayerWarpObject.playerWarpObjects) {
-
-			//
-			String playerWarpText = PlayerWarpGUI.playerWarpText;
-			playerWarpText = playerWarpText.replace("[username]", Bukkit.getOfflinePlayer(wo.getPlayerUUID()).getName());
-			playerWarpText = replaceColorVariables(playerWarpText);
-
-			//
-			String playerIcon = PlayerWarpGUI.defaultWarpIcon;
-			ItemStack playerWarpItemStack = parseString(playerIcon);
-
-			//
-			ArrayList<String> lore = new ArrayList<String>();
-
-			lore.add("");
-			lore.add("");
-			lore.add("");
-			lore.add(ChatColor.DARK_GRAY + "Warp ID: " + wo.uid);
-
-			//
-			ItemMeta playerWarpMeta = playerWarpItemStack.getItemMeta();
-			playerWarpMeta.setDisplayName(playerWarpText);
-
-			playerWarpMeta.setLore(lore);
-			playerWarpMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-
-			playerWarpItemStack.setItemMeta(playerWarpMeta);
-
-			// setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
-
-			inv.setItem(counter, playerWarpItemStack);
-			counter++;
-
-		}
-		*/
 
 		// if going to show nextPage icon or not
 		if (showNext) {

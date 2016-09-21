@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import Managers.PlayerWarpManager;
 import Objects.PlayerWarpObject;
 import PlayerWarpGUI.PlayerWarpGUI;
+import Utils.A;
 
 public class PlayerWarpHandler {
 
@@ -63,10 +64,35 @@ public class PlayerWarpHandler {
 			config.load(playerDataFile);
 
 			// set warpLocation
-			config.set("warpDetails.Location", PlayerWarpManager.getPlayerWarpManager().loc2str(location));
+			config.set("warpDetails.location", PlayerWarpManager.getPlayerWarpManager().loc2str(location));
 
 			// set UUID
 			config.set("playerData.UUID", uuid.toString());
+			
+			config.set("warpDetails.title", "");
+
+			config.save(playerDataFile);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return playerDataFile;
+	}
+	
+	// ------------------------------------------------------
+	// savePlayerWarpObject
+	// ------------------------------------------------------
+	public static File updateTitle(UUID uuid, String title) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
+		
+		// save to file
+		FileConfiguration config = new YamlConfiguration();
+		try {
+			config.load(playerDataFile);
+			
+			config.set("warpDetails.title", title);
 
 			config.save(playerDataFile);
 
@@ -87,6 +113,9 @@ public class PlayerWarpHandler {
 		String playerName = null;
 		String warpLocation = null;
 		String uuid = null;
+		String icon = null;
+		String title = null;
+		boolean enbaled = true;
 
 		// check if file name is a validate UUID
 		try {
@@ -94,9 +123,15 @@ public class PlayerWarpHandler {
 		} catch (IllegalArgumentException exception) {
 			return true;
 		}
+		
+		if(!Bukkit.getOfflinePlayer(playerUUID).hasPlayedBefore()){
+			A.d("Cannot load PlayerWarp file: Player not found");
+			return true;
+		}
 
 		// check if object already exsits
 		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {
+			A.d("Cannot load PlayerWarp file: Warp object already exsists");
 			return true;
 		}
 
@@ -105,19 +140,27 @@ public class PlayerWarpHandler {
 		try {
 
 			config.load(file);
-			// plugin.getLogger().info("LOADED PLAYERWARP FILE: " + playerUUID.toString());
+			A.d("LOADED PLAYERWARP FILE: " + playerUUID.toString());
 
 			// set object userName
 			playerName = Bukkit.getServer().getOfflinePlayer(playerUUID).getName();
-			// plugin.getLogger().info("   playerName: " + playerName);
+			A.d("   playerName: " + playerName);
 
 			// set warpLocation
-			warpLocation = config.getString("warpDetails.Location");
-			// plugin.getLogger().info("   warpLocation" + warpLocation);
+			warpLocation = config.getString("warpDetails.location");
+			A.d("   warpLocation: " + warpLocation);
+
+			// set icon
+			icon = config.getString("warpDetails.icon");
+			A.d("   icon: " + icon);
+
+			// set warpLocation
+			title = config.getString("warpDetails.title");
+			A.d("   title: " + title);
 
 			// set warpLocation
 			uuid = config.getString("playerData.UUID");
-			// plugin.getLogger().info("   uuid: " + uuid);
+			A.d("   uuid: " + uuid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,7 +168,7 @@ public class PlayerWarpHandler {
 		}
 
 		// cretae actual object
-		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation);
+		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation, title);
 
 		return true;
 	}
