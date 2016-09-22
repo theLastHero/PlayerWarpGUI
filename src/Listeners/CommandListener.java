@@ -41,7 +41,7 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
 
-				if (PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp.others")) {
+				if (PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
 					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
 					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp", player.getDisplayName()));
 				}
@@ -53,7 +53,7 @@ public class CommandListener implements CommandExecutor {
 
 			// list and show pwarps
 			if ((args.length < 1) || (args[0].equalsIgnoreCase("list"))) {
-				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.list")) {
+				if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.list")) {
 					player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps &7command.", player.getDisplayName()));
 					return true;
 				}
@@ -66,7 +66,7 @@ public class CommandListener implements CommandExecutor {
 			if ((args.length == 1) && (args[0].equalsIgnoreCase("setwarp") || args[0].equalsIgnoreCase("set"))) {
 
 				// check perm
-				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp")) {
+				if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp")) {
 					player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps set &7command.", player.getDisplayName()));
 					return true;
 				}
@@ -157,7 +157,7 @@ public class CommandListener implements CommandExecutor {
 
 		// delete a war/pwarpp
 		if ((args.length == 1) && (args[0].equalsIgnoreCase("delete"))) {
-			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp")) {
+			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp")) {
 				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps delete &7command.", player.getDisplayName()));
 				return true;
 			}
@@ -178,7 +178,7 @@ public class CommandListener implements CommandExecutor {
 		// ------------
 		if ((args.length >= 2) && (args[0].equalsIgnoreCase("title"))) {
 
-			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
+			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.title")) {
 				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps title &7command.", player.getDisplayName()));
 				return true;
 			}
@@ -219,7 +219,7 @@ public class CommandListener implements CommandExecutor {
 
 			ItemStack newIcon = null;
 
-			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setIcon")) {
+			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.icon")) {
 				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps icon &7command.", player.getDisplayName()));
 				return true;
 			}
@@ -248,7 +248,7 @@ public class CommandListener implements CommandExecutor {
 		// ADMIN =============================================================================================
 		if (args.length == 2) {
 
-			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp.others")) {
+			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
 				player.sendMessage(A.b(" &7You do not have permission to set/delete warps for others.", player.getDisplayName()));
 				return true;
 			}
