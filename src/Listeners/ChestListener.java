@@ -85,7 +85,7 @@ public class ChestListener implements Listener {
 					if (PlayerWarpGUI.useSafeWarp) {
 						// check for beathable air blocks
 						if (!PlayerWarpManager.isSafeLocation(warpLocation)) {
-							player.sendMessage(A.b(" &4Teleport cancelled, location was unsafe to teleport to.", player.getDisplayName()));
+							player.sendMessage(A.b(" &7Teleport cancelled, location was unsafe to teleport to.", player.getDisplayName()));
 
 							return;
 
@@ -96,7 +96,7 @@ public class ChestListener implements Listener {
 					String world = warpLocation.getWorld().getName().toString();
 					for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
 						if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
-							player.sendMessage(A.b(" &4Teleport cancelled, you cannot teleport to that world.", player.getDisplayName()));
+							player.sendMessage(A.b(" &7Teleport cancelled, you cannot teleport to that world.", player.getDisplayName()));
 							return;
 						}
 					}
@@ -117,7 +117,7 @@ public class ChestListener implements Listener {
 			if (tpQueue.containsKey(p.getUniqueId())) {
 				tpQueue.get(p.getUniqueId()).cancel();
 				tpQueue.remove(p.getUniqueId());
-				p.sendMessage(A.c("&aTeleport cancelled.", p.getName()));
+				p.sendMessage(A.c("&7Teleport cancelled.", p.getName()));
 			}
 		}
 	}
@@ -136,14 +136,14 @@ public class ChestListener implements Listener {
 		@Override
 		public void run() {
 			if (count > 0) {
-				Bukkit.getPlayer(player).sendMessage(A.c("&ateleporting in: &6" + count, Bukkit.getPlayer(player).getName()));
+				Bukkit.getPlayer(player).sendMessage(A.c("&7teleporting in: &6" + count, Bukkit.getPlayer(player).getName()));
 				count--;
 			} else {
 				// Teleport code here
 				Bukkit.getPlayer(player).teleport(loc);
 				tpQueue.remove(player);
 				this.cancel();
-				Bukkit.getPlayer(player).sendMessage(A.c("&ateleport Completed.", Bukkit.getPlayer(player).getName()));
+				Bukkit.getPlayer(player).sendMessage(A.c("&7teleport Completed.", Bukkit.getPlayer(player).getName()));
 			}
 		}
 	}

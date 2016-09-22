@@ -41,10 +41,6 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
 
-				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
-					player.sendMessage(A.c(" &f/pwarps title Your title text  &Change the title of your PlayerWarp.", player.getDisplayName()));
-				}
-
 				if (PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp.others")) {
 					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
 					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp", player.getDisplayName()));
@@ -58,7 +54,7 @@ public class CommandListener implements CommandExecutor {
 			// list and show pwarps
 			if ((args.length < 1) || (args[0].equalsIgnoreCase("list"))) {
 				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.list")) {
-					player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps &acommand.", player.getDisplayName()));
+					player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps &7command.", player.getDisplayName()));
 					return true;
 				}
 				chestObject.openGUI(player, 0);
@@ -71,7 +67,7 @@ public class CommandListener implements CommandExecutor {
 
 				// check perm
 				if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp")) {
-					player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps set &acommand.", player.getDisplayName()));
+					player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps set &7command.", player.getDisplayName()));
 					return true;
 				}
 
@@ -79,14 +75,16 @@ public class CommandListener implements CommandExecutor {
 				if ((!(PlayerWarpGUI.setWarpCost == 0))) {
 					EconomyResponse r = PlayerWarpGUI.econ.withdrawPlayer(player, PlayerWarpGUI.setWarpCost);
 					if (!r.transactionSuccess()) {
-						player.sendMessage(A.b(" &aYou do not have enough moeny to perform to: &6/pwarp set.", player.getDisplayName()));
+						player.sendMessage(A.b(" &7You do not have enough moeny to perform to: &6/pwarp set.", player.getDisplayName()));
 						return true;
+					} else {
+						player.sendMessage(A.b("&6" + PlayerWarpGUI.setWarpCost + " &7has been withdrawn from your account", player.getDisplayName()));
 					}
 				}
 
 				// check if already has a pwarp
 				if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
-					player.sendMessage(A.b(" &aYou already have a &6/pwarp&a, you must delete it before setting a new &6/pwarp", player.getDisplayName()));
+					player.sendMessage(A.b(" &7You already have a &6/pwarp&7, you must delete it before setting a new &6/pwarp", player.getDisplayName()));
 					return true;
 				}
 
@@ -95,7 +93,7 @@ public class CommandListener implements CommandExecutor {
 
 					// check for beathable air blocks
 					if (!PlayerWarpManager.isSafeLocation(player.getLocation())) {
-						player.sendMessage(A.b(" &aYou cannot set a &6/pwarp &ain this unsafe location", player.getDisplayName()));
+						player.sendMessage(A.b(" &7You cannot set a &6/pwarp &7in this unsafe location", player.getDisplayName()));
 						return true;
 					}
 				}
@@ -105,7 +103,7 @@ public class CommandListener implements CommandExecutor {
 				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
 					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
 					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
-						player.sendMessage(A.b(" &6/pwarp &acannot be set in this world", player.getDisplayName()));
+						player.sendMessage(A.b(" &6/pwarp &7cannot be set in this world", player.getDisplayName()));
 						return true;
 					}
 				}
@@ -114,7 +112,7 @@ public class CommandListener implements CommandExecutor {
 				if ((PlayerWarpGUI.enableGriefPrevetion == true) && (PlayerWarpGUI.gp.isEnabled())) {
 					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
 					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(player.getName()))) {
-						player.sendMessage(A.b("&aYou can only set warps inside your own claim", player.getDisplayName()));
+						player.sendMessage(A.b("&7You can only set warps inside your own claim", player.getDisplayName()));
 						return true;
 
 					}
@@ -138,7 +136,7 @@ public class CommandListener implements CommandExecutor {
 					}
 
 					if ((count == 0) || (owner == false)) {
-						player.sendMessage(A.b("&aYou must be a owner or member of the region to set a &6/pwarp &ahere.", player.getDisplayName()));
+						player.sendMessage(A.b("&7You must be a owner or member of the region to set a &6/pwarp &7here.", player.getDisplayName()));
 						return false;
 					}
 				}
@@ -149,7 +147,7 @@ public class CommandListener implements CommandExecutor {
 				if (PlayerWarpHandler.createPlayerWarpFile(player.getUniqueId())) {
 
 					PlayerWarpHandler.createObjectFromWarpFile(PlayerWarpHandler.savePlayerWarpObject(player.getUniqueId(), player.getLocation()));
-					player.sendMessage(A.b(" &6/pwarp &ahas been set for: &6[username]", player.getDisplayName()));
+					player.sendMessage(A.b(" &6/pwarp &7has been set for: &6[username]", player.getDisplayName()));
 				}
 
 				return true;
@@ -160,37 +158,37 @@ public class CommandListener implements CommandExecutor {
 		// delete a war/pwarpp
 		if ((args.length == 1) && (args[0].equalsIgnoreCase("delete"))) {
 			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp")) {
-				player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps delete &acommand.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps delete &7command.", player.getDisplayName()));
 				return true;
 			}
 
 			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
-				player.sendMessage(A.b(" &aYou do not have a &6/pwarp &ato delete.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have a &6/pwarp &7to delete.", player.getDisplayName()));
 				return true;
 			}
 
 			PlayerWarpManager.removePlayerObject(player.getUniqueId());
 			PlayerWarpHandler.deletePlayerWarpFile(player.getUniqueId());
-			player.sendMessage(A.b(" &aYour &6/pwarp &ahas been deleted.", player.getDisplayName()));
+			player.sendMessage(A.b(" &7Your &6/pwarp &7has been deleted.", player.getDisplayName()));
 
 			return true;
 		}
 
 		// Set a title
-		//------------
+		// ------------
 		if ((args.length >= 2) && (args[0].equalsIgnoreCase("title"))) {
 
 			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setTitle")) {
-				player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps title &acommand.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps title &7command.", player.getDisplayName()));
 				return true;
 			}
 
 			if (args.length == 2) {
-				player.sendMessage(A.b(" &aUsage: &6/pwarps title &aYour title text.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7Usage: &6/pwarps title &7Your title text.", player.getDisplayName()));
 			}
 
 			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
-				player.sendMessage(A.b(" &aYou do not have a &6/pwarp &ato set a title for.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have a &6/pwarp &7to set a title for.", player.getDisplayName()));
 				return true;
 			}
 
@@ -201,53 +199,57 @@ public class CommandListener implements CommandExecutor {
 			}
 
 			String title = sb.toString();
-			//Bukkit.broadcastMessage(title);
-			
-			if(title.length() > PlayerWarpGUI.maxTitleSize){
-				player.sendMessage(A.b(" &aYour title is too long, you are limited to &6"+PlayerWarpGUI.maxTitleSize +" &acharacters", player.getDisplayName()));	
+			// Bukkit.broadcastMessage(title);
+
+			if (title.length() > PlayerWarpGUI.maxTitleSize) {
+				player.sendMessage(A.b(" &7Your title is too long, you are limited to &6" + PlayerWarpGUI.maxTitleSize + " &7characters", player.getDisplayName()));
 				return true;
 			}
 
 			PlayerWarpGUI.playerWarpManager.updatePlayerObjectTitle(player.getUniqueId(), title);
-			player.sendMessage(A.b(" &aYour title has been set to " + title, player.getDisplayName()));
+			player.sendMessage(A.b(" &7Your title has been set to " + title, player.getDisplayName()));
 
 			return true;
 		}
-		
+
 		// Set a icon
-		//------------
-		
+		// ------------
+
 		if ((args.length >= 1) && (args[0].equalsIgnoreCase("icon"))) {
 
 			ItemStack newIcon = null;
-			
+
 			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setIcon")) {
-				player.sendMessage(A.b(" &aYou do not have permission to access the &6/pwarps icon &acommand.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have permission to access the &6/pwarps icon &7command.", player.getDisplayName()));
 				return true;
 			}
 
-			if(player.getItemInHand() == null){
-				player.sendMessage(A.b(" &aYou must be holding the item in your hand to use the  &6/pwarps icon &acommand.", player.getDisplayName()));
+			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
+				player.sendMessage(A.b(" &7You do not have a &6/pwarp &7to set a icon for.", player.getDisplayName()));
 				return true;
 			}
-			
+
+			if (player.getItemInHand() == null) {
+				player.sendMessage(A.b(" &7You must be holding the item in your hand to use the  &6/pwarps icon &7command.", player.getDisplayName()));
+				return true;
+			}
+
 			newIcon = player.getItemInHand();
 			int iconID = newIcon.getTypeId();
 			int iconData = newIcon.getData().getData();
-			String newIconString = ""+iconID+":"+iconData;
-			
+			String newIconString = "" + iconID + ":" + iconData;
+
 			PlayerWarpGUI.playerWarpManager.updatePlayerObjectIcon(player.getUniqueId(), newIconString);
-			player.sendMessage(A.b(" &aYour icon has been changed", player.getDisplayName()));
+			player.sendMessage(A.b(" &7Your icon has been changed", player.getDisplayName()));
 
 			return true;
 		}
-	
 
 		// ADMIN =============================================================================================
 		if (args.length == 2) {
 
 			if (!PlayerWarpGUI.perms.has(player, "playerWarpGUI.setWarp.others")) {
-				player.sendMessage(A.b(" &aYou do not have permission to set/delete warps for others.", player.getDisplayName()));
+				player.sendMessage(A.b(" &7You do not have permission to set/delete warps for others.", player.getDisplayName()));
 				return true;
 			}
 
@@ -259,18 +261,18 @@ public class CommandListener implements CommandExecutor {
 				if (Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore() == true) {
 					otherUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
 				} else {
-					player.sendMessage(A.b(" &aPlayer &6 [username] &anot found.", args[1]));
+					player.sendMessage(A.b(" &7Player &6 [username] &7not found.", args[1]));
 					return true;
 				}
 
 				if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(otherUUID)) {
-					player.sendMessage(A.b(" &aPlayer &b[username] &adoes not have a &6/pwarp &aset.", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(" &7Player &b[username] &7does not have a &6/pwarp &7set.", Bukkit.getOfflinePlayer(otherUUID).getName()));
 					return true;
 				}
 
 				PlayerWarpManager.removePlayerObject(otherUUID);
 				PlayerWarpHandler.deletePlayerWarpFile(otherUUID);
-				player.sendMessage(A.b(" &aPlayer &b[username] &6/pwarp &ahas been deleted.", Bukkit.getOfflinePlayer(otherUUID).getName()));
+				player.sendMessage(A.b(" &7Player &b[username] &6/pwarp &7has been deleted.", Bukkit.getOfflinePlayer(otherUUID).getName()));
 
 				return true;
 
@@ -283,13 +285,13 @@ public class CommandListener implements CommandExecutor {
 				if (Bukkit.getOfflinePlayer(args[1]).hasPlayedBefore() == true) {
 					otherUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
 				} else {
-					player.sendMessage(A.b(" &aPlayer &6 [username] &anot found.", args[1]));
+					player.sendMessage(A.b(" &7Player &6 [username] &7not found.", args[1]));
 					return true;
 				}
 
 				// check if already has a pwarp
 				if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(otherUUID)) {
-					player.sendMessage(A.b(" &aPlayer &b[username] &aalready has a &6/pwarp &aset, you must delete it before etting a new &6/pwarp", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(" &7Player &b[username] &7already has a &6/pwarp &7set, you must delete it before etting a new &6/pwarp", Bukkit.getOfflinePlayer(otherUUID).getName()));
 					return true;
 				}
 
@@ -298,7 +300,7 @@ public class CommandListener implements CommandExecutor {
 
 					// check for beathable air blocks
 					if (!PlayerWarpManager.isSafeLocation(player.getLocation())) {
-						player.sendMessage(A.b(" &aCannot set a &6/pwarp &ain this unsafe location", player.getDisplayName()));
+						player.sendMessage(A.b(" &7Cannot set a &6/pwarp &7in this unsafe location", player.getDisplayName()));
 						return true;
 					}
 				}
@@ -308,7 +310,7 @@ public class CommandListener implements CommandExecutor {
 				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
 					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
 					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
-						player.sendMessage(A.b(" &6/pwarp &acannot be set in this world", player.getDisplayName()));
+						player.sendMessage(A.b(" &6/pwarp &7cannot be set in this world", player.getDisplayName()));
 						return true;
 					}
 				}
@@ -317,7 +319,7 @@ public class CommandListener implements CommandExecutor {
 				if ((PlayerWarpGUI.enableGriefPrevetion == true) && (PlayerWarpGUI.gp.isEnabled())) {
 					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
 					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(Bukkit.getOfflinePlayer(otherUUID).getName()))) {
-						player.sendMessage(A.b("&aYou can only set warps inside the players own claim", Bukkit.getOfflinePlayer(otherUUID).getName()));
+						player.sendMessage(A.b("&7You can only set warps inside the players own claim", Bukkit.getOfflinePlayer(otherUUID).getName()));
 						return true;
 
 					}
@@ -341,7 +343,7 @@ public class CommandListener implements CommandExecutor {
 					}
 
 					if ((count == 0) || (owner == false)) {
-						player.sendMessage(A.b("&aPlayer &b[username]&a must be a owner or member of the region to set a &6/pwarp here.", player.getDisplayName()));
+						player.sendMessage(A.b("&7Player &b[username]&7 must be a owner or member of the region to set a &6/pwarp here.", player.getDisplayName()));
 						return false;
 					}
 				}
@@ -352,7 +354,7 @@ public class CommandListener implements CommandExecutor {
 				if (PlayerWarpHandler.createPlayerWarpFile(otherUUID)) {
 
 					PlayerWarpHandler.createObjectFromWarpFile(PlayerWarpHandler.savePlayerWarpObject(otherUUID, player.getLocation()));
-					player.sendMessage(A.b(" &6/pwarp &ahas been set for: &6[username]", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(" &6/pwarp &7has been set for: &6[username]", Bukkit.getOfflinePlayer(otherUUID).getName()));
 				}
 
 				return true;
