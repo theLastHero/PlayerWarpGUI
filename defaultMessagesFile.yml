@@ -1,0 +1,24 @@
+# [username] gets replace with players name
+# [cost] gets replaces with setWapCost
+messages:
+  permissions:
+    noPermission: " &7You do not have permission to do that command"
+  errors:
+    notEnoughMoney: " &7You do not have enough money to perform to: &6/pwarp set."
+    alreadyHaveWarpSet: " &7You already have a &6/pwarp&7, you must delete it before setting a new &6/pwarp"
+    setInUnsafeLocation: " &7You cannot set a &6/pwarp &7in this unsafe location"
+    setInDisabledWorld: " &6/pwarp &7cannot be set in this world"
+    GPpermission: "&7You can only set warps inside your own claim"
+    WGpermission: "&7You must be a owner or member of the region to set a &6/pwarp &7here."
+  titles:
+    titleUsage: " &7Usage: &6/pwarps title &7Your title text."
+    titleSizeError: " &7Your title is too long, you are limited to &6"
+    titleSet: " &7Your title has been set."
+  icons:
+    noIconItem: " &7You must be holding the item in your hand to use the  &6/pwarps icon &7command."
+    iconSet: " &7Your icon has been changed."
+  others:
+    withdrawn: "&6[cost] &7has been withdrawn from your account"
+    warpset: " &6/pwarp &7has been set for: &6[username]"
+    deleteWarp: " &7Your &6/pwarp &7has been deleted."
+    noWarpSet: " &7You do not have a &6/pwarp."

@@ -113,8 +113,12 @@ WorldGuard:
   enabled: false
   owners: true
   members: true
-  
-  
-  
-  
-  
+
+
+# +------------+#
+# | Metrics |#
+# +------------+#
+# enabled: true/false for metrics to send data about
+#          plugin usages.
+Metrics:
+  enabled: false

@@ -3,8 +3,6 @@ package Objects;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import org.bukkit.inventory.ItemStack;
-
 public class PlayerWarpObject {
 
 	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();

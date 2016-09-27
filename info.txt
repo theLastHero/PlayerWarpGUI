@@ -1,0 +1,49 @@
+Let players set their own warps. Let players goto other players warps using a GUI interface system.
+
+Requirements:
+    VAULT - This plugin requires VAULT to be installed.
+	GriefPrevetion - Not required, only needed for Griefprevention support.
+	WorldGuard - Not required, only needed for WorldGuard support.
+	
+Installation:
+    Download and copy into your plugins folder.
+    Edit config.yml to your requirements.
+
+Main features:
+
+    Players can set a playerWarp for themselves.
+    Players can view and goto other players warps by using a GUI.
+    Let players set their own title for their warp.
+    Let players set their own icon image for their warp.
+	Support for GriefPrevetion. Players can only set a warp in their own claim.
+	Support for WorldGuard, Players can only set a warp in a region they are a owner or member of.
+	Diabled worlds that can/cannot have warps set in.
+	Set a cost of setting a warp.
+    Permissions based access to commands.
+
+Permissions:
+
+    playerwarpgui.list - Allows the player to view warps list.
+    playerwarpgui.setwarp- Allows the player to set & delete their own warp location.
+    playerwarpgui.setwarp.others - Allows the player to set && delete warp locations of OTHER PLAYERS.
+    playerwarpgui.title - Allows player to set a title text for a warp in the GUI.
+    playerwarpgui.icon - Allows the player to set a new icon for their warp in the GUI.
+
+Commands:
+
+    /pwarps - Show the main GU interface of warp aviable to goto.
+    /pwarps help - Show a list of commands usage
+	/pwarps set - Set a warp at the current Location for the player.
+    /pwarps delete - Delete current warp for the player
+    /pwarps title <title text> - set the title text for the players warp
+	/pwarps icon - Set the icon in the GUI to the icon of the item the player in holding in their hand
+	/pwarps set <player name> - sets a warp at the current location for another player.
+	/pwarps delete <player name> - deletes the warp for another player.
+	
+Installation:
+All you need to do is to download and copy the file into your plugins folder. If you need to configure anything you will first need to start up the server, then you can go into the AutoTorch folder where you can find config.yml
+Video:
+
+Example Configuration:
+
+
