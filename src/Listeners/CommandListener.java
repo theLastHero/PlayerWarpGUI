@@ -75,7 +75,7 @@ public class CommandListener implements CommandExecutor {
 				if ((!(PlayerWarpGUI.setWarpCost == 0))) {
 					EconomyResponse r = PlayerWarpGUI.econ.withdrawPlayer(player, PlayerWarpGUI.setWarpCost);
 					if (!r.transactionSuccess()) {
-						player.sendMessage(A.b(PlayerWarpGUI.noPermission, player.getDisplayName()));
+						player.sendMessage(A.b(PlayerWarpGUI.notEnoughMoney, player.getDisplayName()));
 						return true;
 					} else {
 						player.sendMessage(A.b(PlayerWarpGUI.withdrawn, player.getDisplayName()));

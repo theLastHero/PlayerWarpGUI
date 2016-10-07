@@ -78,6 +78,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	
 	public static String withdrawn;
 	public static String alreadyHaveWarpSet;
+	public static String notEnoughMoney;
 	public static String setInUnsafeLocation;
 	public static String setInDisabledWorld;
 	public static String GPpermission;

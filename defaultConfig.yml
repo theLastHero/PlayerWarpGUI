@@ -121,4 +121,4 @@ WorldGuard:
 # enabled: true/false for metrics to send data about
 #          plugin usages.
 Metrics:
-  enabled: false
+  enabled: true

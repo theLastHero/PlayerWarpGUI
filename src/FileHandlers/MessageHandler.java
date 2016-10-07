@@ -33,7 +33,8 @@ public class MessageHandler {
 
 			// load useSafeWarp
 			PlayerWarpGUI.noPermission = message.getString("messages.permissions.noPermission", " &7You do not have permission to do that command");
-			
+
+			PlayerWarpGUI.notEnoughMoney = message.getString("messages.errors.notEnoughMoney", " &7You do not have enough money to perform to: &6/pwarp set.");
 			PlayerWarpGUI.alreadyHaveWarpSet = message.getString("messages.errors.alreadyHaveWarpSet", " &7You already have a &6/pwarp&7, you must delete it before setting a new &6/pwarp");
 			PlayerWarpGUI.setInUnsafeLocation = message.getString("messages.errors.setInUnsafeLocation", " &7You cannot set a &6/pwarp &7in this unsafe location");
 			PlayerWarpGUI.setInDisabledWorld = message.getString("messages.errors.setInDisabledWorld", " &6/pwarp &7cannot be set in this world");
