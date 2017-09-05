@@ -39,10 +39,15 @@ public class ChestListener implements Listener {
 		// was it a player
 		if (e.getWhoClicked() instanceof Player) {
 			
-			//check if no idea was clicked
-			if(e.getCurrentItem().getItemMeta() == null){
+			//check if no item was clicked
+			if(e.getSlot() < 0|| e.getSlot() > 60  ) {
 				return;
 			}
+			
+			if(e.getCurrentItem().getItemMeta() == null) {
+				return;
+			}
+			
 
 			// does it match the right inventory name
 			if (e.getInventory().getName().contains(chestObject.replaceColorVariables(PlayerWarpGUI.chestText))) {
