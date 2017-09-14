@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -33,20 +34,14 @@ public class ChestListener implements Listener {
 		plugin = playerWarpGUI;
 	}
 
+	@SuppressWarnings("resource")
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onInventoryClick(final InventoryClickEvent e) {
 
 		// was it a player
 		if (e.getWhoClicked() instanceof Player) {
 			
-			//check if no item was clicked
-			if(e.getSlot() < 0|| e.getSlot() > 60  ) {
-				return;
-			}
-			
-			if(e.getCurrentItem().getItemMeta() == null) {
-				return;
-			}
+
 			
 
 			// does it match the right inventory name
@@ -55,6 +50,25 @@ public class ChestListener implements Listener {
 				// cancel event, prevent player from removing the item
 				e.setCancelled(true);
 
+				
+				//check if no item was clicked
+				if(e.getSlot() < 0  ) {
+					return;
+				}
+				
+				if(e.getCurrentItem().getItemMeta() == null) {
+					return;
+				}
+				
+				if (e.getInventory().getType() != InventoryType.CHEST) {
+					
+				return;
+				}
+				
+				if(e.getCurrentItem().getItemMeta().getDisplayName() == null  ) {
+					return;
+				}
+				
 				Player player = (Player) e.getWhoClicked();
 
 				

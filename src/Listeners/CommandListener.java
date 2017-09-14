@@ -39,6 +39,8 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.c(" &f/pwarps list  &aview all playerWarps", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
+				player.sendMessage(A.c(" &f/pwarps icon  &aChange your warp icon to the item in hand.", player.getDisplayName()));
+				player.sendMessage(A.c(" &f/pwarps title sometext  &aChange the title of your warp text. Supports colorcodes.", player.getDisplayName()));
 
 				if (PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
 					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
@@ -364,6 +366,7 @@ public class CommandListener implements CommandExecutor {
 
 		}
 
+		player.sendMessage(A.b(" &6Unknown command. Use &7/pwarp help &6for usage", player.getDisplayName()));
 		return false;
 	}
 
