@@ -164,9 +164,10 @@ public class chestObject {
 			ArrayList<String> lore = new ArrayList<String>();
 
 			//lore.add(playerWarpObjects.get(objNum).getWarpLocation());
-			lore.add("");
-			lore.add("");
-			lore.add("");
+			ArrayList<String> loreList = a.getLoreList();
+			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(0)));
+			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(1)));
+			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(2)));
 			lore.add(ChatColor.DARK_GRAY + "Warp ID: " + b);
 
 			//

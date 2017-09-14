@@ -34,6 +34,7 @@ public class PlayerWarpObject {
 	private String warpLocation;
 	private String title;
 	private String icon;
+	private ArrayList<String> loreList;
 
 	/**
 	 * @return the title
@@ -48,17 +49,22 @@ public class PlayerWarpObject {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public void setLoreLine(String loreText, int loreLine) {
+		this.loreList.set(loreLine, loreText);
+	}
 
 	public int PlayerWarpObject() {
 		 return uid;
 	}
 
-	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title, String icon) {
+	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title, String icon, ArrayList<String> loreList) {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
 		this.setTitle(title);
 		this.setIcon(icon);
+		this.setLoreList(loreList);
 		
 		playerWarpObjects.add(this);
 
@@ -106,6 +112,14 @@ public class PlayerWarpObject {
 	 */
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public ArrayList<String> getLoreList() {
+		return loreList;
+	}
+
+	public void setLoreList(ArrayList<String> loreList) {
+		this.loreList = loreList;
 	}
 
 }

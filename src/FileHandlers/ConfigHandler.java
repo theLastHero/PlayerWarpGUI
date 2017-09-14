@@ -35,6 +35,8 @@ public class ConfigHandler {
 
 		// load the configs
 		FileConfiguration config = new YamlConfiguration();
+
+		// for added metric support
 		try {
 			config.load(plugin.configFile);
 
@@ -50,6 +52,7 @@ public class ConfigHandler {
 				pw.close();
 
 			}
+
 			// load useSafeWarp
 			PlayerWarpGUI.useSafeWarp = config.getBoolean("SafeWarp.enabled", false);
 			// A.d("Setting useSafeWarp to: " + String.valueOf(PlayerWarpGUI.useSafeWarp));
@@ -61,7 +64,7 @@ public class ConfigHandler {
 			// print out unsafeBlocks
 			int theTotalNumberOfElements = PlayerWarpGUI.unsafeBlocks.size();
 			for (int counter = 0; counter < theTotalNumberOfElements; counter++) {
-				// A.d("    " + PlayerWarpGUI.unsafeBlocks.get(counter));
+				// A.d(" " + PlayerWarpGUI.unsafeBlocks.get(counter));
 			}
 
 			// load teleport cooldown
@@ -98,15 +101,18 @@ public class ConfigHandler {
 
 			// load setWarpCost
 			PlayerWarpGUI.setWarpCost = config.getInt("Settings.setWarpCost", 0);
-			// A.d("Setting setWarpCost to: " + Integer.toString(PlayerWarpGUI.setWarpCost));
+			// A.d("Setting setWarpCost to: " +
+			// Integer.toString(PlayerWarpGUI.setWarpCost));
 
 			// load disabledWorlds
 			PlayerWarpGUI.disabledWorlds = config.getStringList("Settings.disabledWorlds");
-			// A.d("Setting setWarpCost to: " + Integer.toString(PlayerWarpGUI.setWarpCost));
+			// A.d("Setting setWarpCost to: " +
+			// Integer.toString(PlayerWarpGUI.setWarpCost));
 
 			// load GriefPrevetion
 			PlayerWarpGUI.enableGriefPrevetion = config.getBoolean("GriefPrevetion.enabled", false);
-			// A.d("Setting enableGriefPrevetion to: " + PlayerWarpGUI.enableGriefPrevetion);
+			// A.d("Setting enableGriefPrevetion to: " +
+			// PlayerWarpGUI.enableGriefPrevetion);
 
 			// load enableWorldGuard
 			PlayerWarpGUI.enableWorldGuard = config.getBoolean("WorldGuard.enabled", false);
@@ -129,6 +135,14 @@ public class ConfigHandler {
 			// load maxTitleSize
 			PlayerWarpGUI.maxTitleSize = config.getInt("Settings.maxTitleSize", 25);
 			// A.d("Setting maxTitleSize to: " + PlayerWarpGUI.maxTitleSize);
+
+			// for added lore support
+			//maxLoreSize
+			if (!config.isSet("Settings.maxLoreSize")) {
+				PlayerWarpGUI.maxLoreSize = 40;
+			} else {
+				PlayerWarpGUI.maxLoreSize = config.getInt("Settings.maxLoreSize",40);
+			}
 
 			// PlayerWarpGUI.getInstance().saveConfig();
 

@@ -51,6 +51,9 @@ public class MessageHandler {
 			PlayerWarpGUI.titleUsage = message.getString("messages.titles.titleUsage", " &7Usage: &6/pwarps title &7Your title text.");
 			PlayerWarpGUI.iconSet = message.getString("messages.icons.iconSet", " &7Your icon has been changed.");
 			PlayerWarpGUI.noIconItem = message.getString("messages.icons.noIconItem", " &7You must be holding the item in your hand to use the  &6/pwarps icon &7command.");
+			PlayerWarpGUI.loreSizeError = message.getString("messages.lore.loreSizeError", " &7Your lore text is too long");
+			PlayerWarpGUI.loreSet = message.getString("messages.lore.loreSet", " &7Your lore text has been set");
+			PlayerWarpGUI.loreUsage = message.getString("messages.lore.loreUsage", " &7Usage: &6/pwarps lore1,lore2 or lore3 &7Your lore text.");
 			
 
 		} catch (Exception e) {

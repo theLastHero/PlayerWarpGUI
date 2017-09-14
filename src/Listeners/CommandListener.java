@@ -40,7 +40,8 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps icon  &aChange your warp icon to the item in hand.", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps title sometext  &aChange the title of your warp text. Supports colorcodes.", player.getDisplayName()));
+				player.sendMessage(A.c(" &f/pwarps title Your title text  &aChange the title of your warp text. Supports colorcodes.", player.getDisplayName()));
+				player.sendMessage(A.c(" &f/pwarps lore1 Your Lore text  &aChange text for the lore of your warp. Also lore2, lore3. Supports colorcodes.", player.getDisplayName()));
 
 				if (PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
 					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
@@ -214,6 +215,62 @@ public class CommandListener implements CommandExecutor {
 
 			return true;
 		}
+		
+		//-------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------
+		// Set lore1
+		// ------------
+		if ((args.length >= 2) && ((args[0].equalsIgnoreCase("lore1") || (args[0].equalsIgnoreCase("lore2") || (args[0].equalsIgnoreCase("lore3")) )))) {
+			int loreNum=0;
+			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.lore")) {
+				player.sendMessage(A.b(PlayerWarpGUI.noPermission, player.getDisplayName()));
+				return true;
+			}
+
+			if (args.length == 1) {
+				player.sendMessage(A.b(PlayerWarpGUI.titleUsage, player.getDisplayName()));
+				return true;
+			}
+
+			if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(player.getUniqueId())) {
+				player.sendMessage(A.b(PlayerWarpGUI.noWarpSet, player.getDisplayName()));
+				return true;
+			}
+			
+			if (args[0].equalsIgnoreCase("lore1")) {
+				loreNum = 0;
+			}
+
+			if (args[0].equalsIgnoreCase("lore2")) {
+				loreNum = 1;
+			}
+			
+			if (args[0].equalsIgnoreCase("lore3")) {
+				loreNum = 2;
+			}
+			
+			StringBuilder sb = new StringBuilder(); // Creating a new instance of StringBuilder
+			for (int i = 1; i < args.length; i++) { // Basic for loop, going through the arguments starting from 1
+				sb.append(args[i]); // Adds the argument into the StringBuilder
+				sb.append(" "); // Adding a space into the StringBuilder
+			}
+
+			String lore1 = sb.toString();
+			// Bukkit.broadcastMessage(title);
+
+			if ((lore1.length() > PlayerWarpGUI.maxTitleSize) || (lore1.length() == 0)) {
+				player.sendMessage(A.b(PlayerWarpGUI.loreSizeError, player.getDisplayName()));
+				return true;
+			}
+
+			PlayerWarpGUI.playerWarpManager.updatePlayerObjectLore(player.getUniqueId(), lore1, loreNum);
+			player.sendMessage(A.b(PlayerWarpGUI.loreSet, player.getDisplayName()));
+
+			return true;
+		}
+		
+		//----------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------
 
 		// Set a icon
 		// ------------

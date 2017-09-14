@@ -28,6 +28,7 @@ Permissions:
     playerwarpgui.setwarp.others - Allows the player to set && delete warp locations of OTHER PLAYERS.
     playerwarpgui.title - Allows player to set a title text for a warp in the GUI.
     playerwarpgui.icon - Allows the player to set a new icon for their warp in the GUI.
+    playerwarpgui.lore - Allows the player to set lore1, lore2 & lore3 text.
 
 Commands:
 

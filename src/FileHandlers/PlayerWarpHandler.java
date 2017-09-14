@@ -8,6 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import Managers.PlayerWarpManager;
 import Objects.PlayerWarpObject;
 import PlayerWarpGUI.PlayerWarpGUI;
@@ -31,32 +35,34 @@ public class PlayerWarpHandler {
 		return PlayerWarpObject.playerWarpObjects;
 	}
 
-	public static boolean createPlayerWarpFile(UUID uuid){
-		
-		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString()+".yml");
+	public static boolean createPlayerWarpFile(UUID uuid) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
 
 		playerDataFile.getParentFile().mkdirs();
 		ConfigHandler.copy(plugin.getResource("defaultWarpConfig.yml"), playerDataFile);
-		
+
 		return true;
 	}
-	
-	public static boolean deletePlayerWarpFile(UUID uuid){
-		
-		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString()+".yml");
+
+	public static boolean deletePlayerWarpFile(UUID uuid) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
 		playerDataFile.delete();
-		//playerDataFile.getParentFile().mkdirs();
-		//ConfigHandler.copy(plugin.getResource("defaultWarpConfig.yml"), playerDataFile);
-		
+		// playerDataFile.getParentFile().mkdirs();
+		// ConfigHandler.copy(plugin.getResource("defaultWarpConfig.yml"),
+		// playerDataFile);
+
 		return true;
 	}
+
 	// ------------------------------------------------------
 	// savePlayerWarpObject
 	// ------------------------------------------------------
 	public static File savePlayerWarpObject(UUID uuid, Location location) {
 
-		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
-		
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
+
 		// save to file
 		FileConfiguration config = new YamlConfiguration();
 		try {
@@ -67,7 +73,7 @@ public class PlayerWarpHandler {
 
 			// set UUID
 			config.set("playerData.UUID", uuid.toString());
-			
+
 			config.set("warpDetails.title", "");
 
 			config.save(playerDataFile);
@@ -78,20 +84,43 @@ public class PlayerWarpHandler {
 
 		return playerDataFile;
 	}
-	
+
 	// ------------------------------------------------------
 	// updateIcon
 	// ------------------------------------------------------
 	public static File updateIcon(UUID uuid, String icon) {
 
-		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
-		
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
+
 		// save to file
 		FileConfiguration config = new YamlConfiguration();
 		try {
 			config.load(playerDataFile);
-			
+
 			config.set("warpDetails.icon", icon);
+
+			config.save(playerDataFile);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return playerDataFile;
+	}
+
+	// ------------------------------------------------------
+	// updateTitle
+	// ------------------------------------------------------
+	public static File updateTitle(UUID uuid, String title) {
+
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
+
+		// save to file
+		FileConfiguration config = new YamlConfiguration();
+		try {
+			config.load(playerDataFile);
+
+			config.set("warpDetails.title", title);
 
 			config.save(playerDataFile);
 
@@ -105,16 +134,16 @@ public class PlayerWarpHandler {
 	// ------------------------------------------------------
 	// updateTitle
 	// ------------------------------------------------------
-	public static File updateTitle(UUID uuid, String title) {
+	public static File updatelore(UUID uuid, ArrayList<String> lore) {
 
-		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder  + File.separator +  uuid.toString() + ".yml");
-		
+		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
+
 		// save to file
 		FileConfiguration config = new YamlConfiguration();
 		try {
 			config.load(playerDataFile);
-			
-			config.set("warpDetails.title", title);
+
+			config.set("warpDetails.lore", lore);
 
 			config.save(playerDataFile);
 
@@ -128,7 +157,7 @@ public class PlayerWarpHandler {
 	// -----------------------------------------------------
 	// createObjectFromWarpFile
 	// -----------------------------------------------------
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "unchecked" })
 	public static boolean createObjectFromWarpFile(File file) {
 
 		UUID playerUUID = null;
@@ -137,6 +166,7 @@ public class PlayerWarpHandler {
 		String uuid = null;
 		String icon = null;
 		String title = null;
+		ArrayList<String> loreList;
 		boolean enbaled = true;
 
 		// check if file name is a validate UUID
@@ -145,8 +175,8 @@ public class PlayerWarpHandler {
 		} catch (IllegalArgumentException exception) {
 			return true;
 		}
-		
-		if(!Bukkit.getOfflinePlayer(playerUUID).hasPlayedBefore()){
+
+		if (!Bukkit.getOfflinePlayer(playerUUID).hasPlayedBefore()) {
 			A.d("Cannot load PlayerWarp file: Player not found");
 			return true;
 		}
@@ -184,13 +214,22 @@ public class PlayerWarpHandler {
 			uuid = config.getString("playerData.UUID");
 			A.d("   uuid: " + uuid);
 
+			// set warpLocation
+			loreList = (ArrayList<String>) config.getList("warpDetails.lore");
+			
+			int l=0;
+			for(String x : loreList) {
+			  A.d("   lore: " + x);
+			  l = l+1;
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return true;
 		}
 
 		// cretae actual object
-		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation, title, icon);
+		PlayerWarpManager.getPlayerWarpManager().createWarpObjects(playerUUID, warpLocation, title, icon, loreList);
 
 		return true;
 	}

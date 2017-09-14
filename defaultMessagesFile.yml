@@ -17,6 +17,10 @@ messages:
   icons:
     noIconItem: " &7You must be holding the item in your hand to use the  &6/pwarps icon &7command."
     iconSet: " &7Your icon has been changed."
+  lores:
+    loreUsage: " &7Usage: &6/pwarps lore1,lore2 or lore3 &7Your lore text."
+    loreSizeError: " &7Your lore text is too long"
+    loreSet: " &7Your lore text has been set"
   others:
     withdrawn: "&6[cost] &7has been withdrawn from your account."
     warpset: " &6/pwarp &7has been set for: &6[username]."

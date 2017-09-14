@@ -1,5 +1,6 @@
 package Managers;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -119,6 +120,20 @@ public class PlayerWarpManager {
 			PlayerWarpHandler.updateTitle(playerUUID, title);
 		}
 	}
+	
+	// ------------------------------------------------------
+	// updatePlayerObjectLore
+	// ------------------------------------------------------
+	public void updatePlayerObjectLore(UUID playerUUID, String loreText, int loreLine) {
+		if (getPlayerWarpObject(playerUUID) != null) {
+			PlayerWarpObject a = getPlayerWarpObject(playerUUID);
+			ArrayList<String> loreList = a.getLoreList();
+			loreList.set(loreLine, loreText);
+			//a.setLoreLine(loreText, loreLine);
+			a.setLoreList(loreList);
+			PlayerWarpHandler.updatelore(playerUUID, loreList);
+		}
+	}
 
 	// ------------------------------------------------------
 	// getPlayerWarpObject
@@ -162,8 +177,8 @@ public class PlayerWarpManager {
 	// -----------------------------------------------------
 	// createWarpObjects
 	// -----------------------------------------------------
-	public void createWarpObjects(UUID playerUUID, String warpLocation, String title, String icon) {
-		new PlayerWarpObject(playerUUID, warpLocation, title, icon);
+	public void createWarpObjects(UUID playerUUID, String warpLocation, String title, String icon, ArrayList<String> loreList) {
+		new PlayerWarpObject(playerUUID, warpLocation, title, icon, loreList);
 	}
 
 	public Location parseLoc(String str) {
