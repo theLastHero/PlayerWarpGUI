@@ -139,7 +139,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// ------------------------------------------------------
 	public static PlayerWarpObject getPlayerWarpObject(UUID playerUUID) {
-		for (PlayerWarpObject n : PlayerWarpObject.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
 			if (n.getPlayerUUID().equals(playerUUID)) {
 				return n;
 			}
@@ -152,7 +152,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// ------------------------------------------------------
 	public Location getPlayerWarplocation(int warpID) {
-		for (PlayerWarpObject n : PlayerWarpObject.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
 			if (n.getUid() == warpID) {
 				n.getWarpLocation();
 			}
@@ -165,7 +165,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// -----------------------------------------------------
 	public boolean checkPlayerWarpObject(UUID playerUUID) {
-		for (PlayerWarpObject n : PlayerWarpObject.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
 			if (n.getPlayerUUID().equals(playerUUID)) {
 				return true;
 			}

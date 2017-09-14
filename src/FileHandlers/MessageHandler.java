@@ -54,6 +54,7 @@ public class MessageHandler {
 			PlayerWarpGUI.loreSizeError = message.getString("messages.lore.loreSizeError", " &7Your lore text is too long");
 			PlayerWarpGUI.loreSet = message.getString("messages.lore.loreSet", " &7Your lore text has been set");
 			PlayerWarpGUI.loreUsage = message.getString("messages.lore.loreUsage", " &7Usage: &6/pwarps lore1,lore2 or lore3 &7Your lore text.");
+			PlayerWarpGUI.unknownCommand = message.getString("messages.others.unknownCommand", " &6Unknown command. Use &7/pwarp help &6for usage.");
 			
 
 		} catch (Exception e) {

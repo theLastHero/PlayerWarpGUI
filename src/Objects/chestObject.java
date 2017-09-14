@@ -12,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import Managers.PlayerWarpManager;
 import PlayerWarpGUI.PlayerWarpGUI;
@@ -59,7 +60,7 @@ public class chestObject {
 	}
 
 	public static PlayerWarpObject getPlayerWarpObject(int uid) {
-		for (PlayerWarpObject n : PlayerWarpObject.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
 			if (n.getUid() == uid) {
 				return n;
 			}
@@ -101,69 +102,86 @@ public class chestObject {
 		// create inventory
 		Inventory inv = Bukkit.createInventory(null, chestSize, replaceColorVariables(PlayerWarpGUI.chestText));
 
-		
 		// create array list of warps by name from hashmap
-		ArrayList<PlayerWarpObject> playerWarpObjects = PlayerWarpObject.playerWarpObjects;
-		
+		ArrayList<PlayerWarpObject> playerWarpObjects = PlayerWarpObject.plugin.playerWarpObjects;
+
 		// set start
 		startNum = pageNum * pageSize;
-		//Bukkit.broadcastMessage("startNum: " + startNum);
+		// Bukkit.broadcastMessage("startNum: " + startNum);
 
 		// calculate loop size
 		int loopSize = startNum + pageSize;
-		//Bukkit.broadcastMessage("loopSize: " + loopSize);
-		
+		// Bukkit.broadcastMessage("loopSize: " + loopSize);
+
 		// check if page size is smaller then max pageSize
 		// if not then set to actual size, and set showNext to false
 		if (loopSize > (playerWarpObjects.size())) {
 			loopSize = ((playerWarpObjects.size()) - startNum);
 			showNext = false;
 		}
-		//Bukkit.broadcastMessage("loopSize2: " + loopSize);
+		// Bukkit.broadcastMessage("loopSize2: " + loopSize);
 
 		// loop through all for the page
-		//!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!
-		//not showing nextpage icons, something to do with loop size bigger the startnum????
+		// !!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!
+		// not showing nextpage icons, something to do with loop size bigger the
+		// startnum????
 		for (int i = 0; i < loopSize; i++) {
 			int objNum = startNum + i;
-			//Bukkit.broadcastMessage("aaa: " + objNum);
+			// Bukkit.broadcastMessage("aaa: " + objNum);
 			//
-			
+
 			PlayerWarpObject a = playerWarpObjects.get(objNum);
 			int b = a.getUid();
-			
+
 			String playerWarpText = PlayerWarpGUI.playerWarpText;
-			if ((a.getTitle()  == null) || (a.getTitle().length() == 0)) {
-				
+			if ((a.getTitle() == null) || (a.getTitle().length() == 0)) {
+
 			} else {
 				playerWarpText = a.getTitle();
 			}
 
 			String title = a.getTitle();
 			boolean enabled = true;
-			
-			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
-			//playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
 
-			//warp icon
+			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
+			// playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
+
+			// warp icon
+			// ============================
 			String playerIcon = PlayerWarpGUI.defaultWarpIcon;
 			
-			icon  = playerIcon;
-			if ((a.getIcon()  == null) || (a.getIcon().length() == 0)) {
-				
-			} else {
-				playerIcon = a.getIcon();
-			}
-			
+			ItemStack playerWarpItemStack;
 
-			ItemStack playerWarpItemStack = parseString(playerIcon);
+			if (PlayerWarpGUI.usePlayerHead) {
+				
+				ItemStack Item_Skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+			    SkullMeta Meta_Skull = (SkullMeta) Item_Skull.getItemMeta();
+			    ArrayList<String> Lore_Skull = new ArrayList<>();
+			    
+			    Meta_Skull.setOwner(Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
+		        Lore_Skull.clear();
+		        Lore_Skull.add(null);
+		        Item_Skull.setItemMeta(Meta_Skull);
+				
+		        playerWarpItemStack = Item_Skull;
+			} else {
+
+				icon = playerIcon;
+				if ((a.getIcon() == null) || (a.getIcon().length() == 0)) {
+
+				} else {
+					playerIcon = a.getIcon();
+				}
+
+				playerWarpItemStack = parseString(playerIcon);
+			}
 			//
-			
+			// ============================
 
 			//
 			ArrayList<String> lore = new ArrayList<String>();
 
-			//lore.add(playerWarpObjects.get(objNum).getWarpLocation());
+			// lore.add(playerWarpObjects.get(objNum).getWarpLocation());
 			ArrayList<String> loreList = a.getLoreList();
 			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(0)));
 			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(1)));
@@ -182,18 +200,16 @@ public class chestObject {
 			// setSecretCode(playerWarpItemStack, wo.getPlayerUUID().toString());
 
 			inv.setItem(i, playerWarpItemStack);
-			//i++;
-			
-			
+			// i++;
+
 		}
 
 		// if going to show nextPage icon or not
 		if (showNext) {
 
-			ItemStack nextPageItemStack = getNextPageItemStack(page+1);
+			ItemStack nextPageItemStack = getNextPageItemStack(page + 1);
 			inv.setItem(pageSize, nextPageItemStack);
 		}
-		
 
 		player.openInventory(inv);
 

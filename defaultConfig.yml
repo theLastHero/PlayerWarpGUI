@@ -64,6 +64,9 @@ Messages:
 #
 # DefaultWarpIcon: What icon will show as a player warp icon.
 #
+# usePlayerHead: Show players head, instead of WarpIcon.
+#                Overwrites DefaultWarpIcon if True.
+#
 # chestText: Text that will be displayed as the /pwarp inventory title.
 #
 # playerWarpText: Text that will be displayed when you hover over a
@@ -72,6 +75,7 @@ GUI:
   rows: 6
   nextPageIcon: '35:8'
   DefaultWarpIcon: '35:9'
+  usePlayerHead: false
   chestText: '&2PlayerWarps'
   playerWarpText: 'Go to &6[username]''s &fwarp'
   
@@ -92,7 +96,7 @@ Settings:
     - world_the_end
   debugg_mode: false
   maxTitleSize: 25
-  maxloreSize: 40
+  maxLoreSize: 40
 
 # +----------------+#
 # | GriefPrevetion |#

@@ -423,7 +423,7 @@ public class CommandListener implements CommandExecutor {
 
 		}
 
-		player.sendMessage(A.b(" &6Unknown command. Use &7/pwarp help &6for usage", player.getDisplayName()));
+		player.sendMessage(A.b(PlayerWarpGUI.unknownCommand, player.getDisplayName()));
 		return false;
 	}
 

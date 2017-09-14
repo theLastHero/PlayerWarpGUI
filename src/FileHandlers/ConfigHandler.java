@@ -143,6 +143,9 @@ public class ConfigHandler {
 			} else {
 				PlayerWarpGUI.maxLoreSize = config.getInt("Settings.maxLoreSize",40);
 			}
+			
+			//usePlayerHead
+			PlayerWarpGUI.usePlayerHead = config.getBoolean("GUI.usePlayerHead", false);
 
 			// PlayerWarpGUI.getInstance().saveConfig();
 

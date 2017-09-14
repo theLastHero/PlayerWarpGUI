@@ -26,3 +26,4 @@ messages:
     warpset: " &6/pwarp &7has been set for: &6[username]."
     deleteWarp: " &7Your &6/pwarp &7has been deleted."
     noWarpSet: " &7You do not have a &6/pwarp."
+    unknownCommand: " &6Unknown command. Use &7/pwarp help &6for usage"

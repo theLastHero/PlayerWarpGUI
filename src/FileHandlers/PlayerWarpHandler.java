@@ -32,7 +32,7 @@ public class PlayerWarpHandler {
 	// getPlayer
 	// -----------------------------------------------------
 	public static ArrayList<PlayerWarpObject> getPlayerWarpObjects() {
-		return PlayerWarpObject.playerWarpObjects;
+		return plugin.playerWarpObjects;
 	}
 
 	public static boolean createPlayerWarpFile(UUID uuid) {

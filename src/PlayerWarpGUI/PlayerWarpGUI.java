@@ -2,6 +2,7 @@ package PlayerWarpGUI;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -20,6 +21,7 @@ import Listeners.ChestListener;
 import Listeners.CommandListener;
 import Managers.Metrics;
 import Managers.PlayerWarpManager;
+import Objects.PlayerWarpObject;
 import Objects.chestObject;
 import Utils.A;
 
@@ -31,6 +33,8 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static PlayerWarpGUI instance;
 	private PlayerWarpGUI plugin;
 
+	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
+	
 	public static Economy econ = null;
 	public static Permission perms = null;
 
@@ -52,7 +56,8 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static int maxTitleSize = 25;
 	public static int maxLoreSize = 40;
 
-	public static String defaultWarpIcon = "35:9"; // defaul icon that will show in the GUI for player warps
+	public static String defaultWarpIcon = "35:9"; // default icon that will show in the GUI for player warps
+	public static boolean usePlayerHead = false; // 
 	public static String nextPageIcon = "35:8"; // defaul icon that will show in the GUI for player warps
 	public static String playerWarpText = "&6[username]"; // text that displays on icon
 	public static String messagePrefix = "[PlayerWarpGUI]"; // prefic in front of all messages sent from this plugin
@@ -95,6 +100,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String loreUsage;
 	public static String loreSizeError;
 	public static String loreSet;
+	public static String unknownCommand;
 
 	public static A a;
 

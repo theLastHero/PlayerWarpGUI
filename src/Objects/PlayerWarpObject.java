@@ -3,9 +3,11 @@ package Objects;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import PlayerWarpGUI.PlayerWarpGUI;
+
 public class PlayerWarpObject {
 
-	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
+	public static PlayerWarpGUI plugin;
 
 	static int UNIQUE_ID = 0;
 	int uid = ++UNIQUE_ID;
@@ -22,7 +24,7 @@ public class PlayerWarpObject {
     }
 
 	public void removePlayerWarpObject(UUID playerUUID) {
-		playerWarpObjects.remove(this);
+		plugin.playerWarpObjects.remove(this);
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class PlayerWarpObject {
 		this.setIcon(icon);
 		this.setLoreList(loreList);
 		
-		playerWarpObjects.add(this);
+		plugin.playerWarpObjects.add(this);
 
 	}
 
