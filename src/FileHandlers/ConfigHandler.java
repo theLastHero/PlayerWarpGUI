@@ -74,6 +74,10 @@ public class ConfigHandler {
 			// load cancelOnMovement
 			PlayerWarpGUI.cancelOnMovement = config.getBoolean("Teleport.cancelOnMovement", true);
 			// A.d("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
+			
+			// gomeModeAfterTP
+			PlayerWarpGUI.godModeAfterTP = config.getInt("Teleport.godModeAfterTP", 0);
+			// A.d("Setting cencelOnMovement to: " + PlayerWarpGUI.cancelOnMovement);
 
 			// load defaultWarpIcon
 			PlayerWarpGUI.defaultWarpIcon = config.getString("GUI.DefaultWarpIcon", "35:9");

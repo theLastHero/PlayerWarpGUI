@@ -1,6 +1,6 @@
 #################################################
 # +-------------------------------------------+ #
-# |   Config.YML Revision 03 by Judgetread    | #
+# |   config.YML Revision 06 by Judgetread    | #
 # +-------------------------------------------+ #
 #################################################
 #
@@ -16,7 +16,7 @@
 #
 # unsafeBlock: Blocks a player's teleport will be denied to, if they 
 #              were to land on any of the blocks listed. eg: lava, 
-#              water, hopper. Only checks is SafeWarp is true.
+#              water, hopper. Only checks if SafeWarp is true.
 SafeWarp:
   enabled: true
   unsafeBlocks:
@@ -31,15 +31,19 @@ SafeWarp:
 
 
 # +--------------+#
-# | Teleporting |#
+# | Teleporting  |#
 # +--------------+#
 # cooldown: the time in seconds before a player will be teleported
 #
 # cancelOnMovement: If a player moves during the cooldown period
 #                   the teleport will be canceled
+# goModeAfterTP: How long in seconds a player is invincible for after teleporting.
+#                Use 0 to disabe.
+#
 Teleport:
   cooldown: 3
   cancelOnMovement: true
+  godModeAfterTP: 0
 
 
 # +----------+#
@@ -70,7 +74,8 @@ Messages:
 # chestText: Text that will be displayed as the /pwarp inventory title.
 #
 # playerWarpText: Text that will be displayed when you hover over a
-#                 playerWarp icon.
+#                 playerWarp icon as default. Can be overwritten by each
+#                 user with /pwarp title <Titletexthere>
 GUI:
   rows: 6
   nextPageIcon: '35:8'
@@ -120,9 +125,9 @@ WorldGuard:
   members: true
 
 
-# +------------+#
+# +---------+#
 # | Metrics |#
-# +------------+#
+# +---------+#
 # enabled: true/false for metrics to send data about
 #          plugin usages.
 Metrics:

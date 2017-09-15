@@ -50,6 +50,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static boolean useSafeWarp; // wether to check for safe warps when setting and teleporting to
 	public static List<String> unsafeBlocks; // list of unsafe blocks to land on
 	public static int cooldown; // cooldown for teleport in seconds
+	public static int godModeAfterTP;
 	public static boolean cancelOnMovement; // cancel teleport if player moves
 	public static int chestSize; // size o fthe chest to open
 	public static String chestText; // text on the chest that opens
@@ -130,9 +131,6 @@ public class PlayerWarpGUI extends JavaPlugin {
 		// listeners
 		this.getCommand("playerwarps").setExecutor(new CommandListener());
 		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(plugin), this);
-
-		
-		
 
 		// load config file data
 		configHandler.loadConfigFile();
