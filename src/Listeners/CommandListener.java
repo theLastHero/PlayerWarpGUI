@@ -35,17 +35,29 @@ public class CommandListener implements CommandExecutor {
 			// help menu
 			if ((args.length == 1) && (args[0].equalsIgnoreCase("help"))) {
 
-				player.sendMessage(A.c(" &7------------------ &8[&6PlayerWarps&8] &7---------------", player.getDisplayName()));
+				player.sendMessage(
+						A.c(" &7------------------ &8[&6PlayerWarps&8] &7---------------", player.getDisplayName()));
+
 				player.sendMessage(A.c(" &f/pwarps list  &aview all playerWarps", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
+
+				player.sendMessage(
+						A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
 				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps icon  &aChange your warp icon to the item in hand.", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps title Your title text  &aChange the title of your warp text. Supports colorcodes.", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps lore1 Your Lore text  &aChange text for the lore of your warp. Also lore2, lore3. Supports colorcodes.", player.getDisplayName()));
+				player.sendMessage(
+						A.c(" &f/pwarps icon  &aChange your warp icon to the item in hand.", player.getDisplayName()));
+				player.sendMessage(A.c(
+						" &f/pwarps title Your title text  &aChange the title of your warp text. Supports colorcodes.",
+						player.getDisplayName()));
+				player.sendMessage(A.c(
+						" &f/pwarps lore1 Your Lore text  &aChange text for the lore of your warp. Also lore2, lore3. Supports colorcodes.",
+						player.getDisplayName()));
 
 				if (PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
-					player.sendMessage(A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location", player.getDisplayName()));
-					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp", player.getDisplayName()));
+					player.sendMessage(
+							A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location",
+									player.getDisplayName()));
+					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp",
+							player.getDisplayName()));
 				}
 
 				player.sendMessage(A.c(" &7-----------------------------------------------", player.getDisplayName()));
@@ -63,8 +75,7 @@ public class CommandListener implements CommandExecutor {
 
 				return true;
 			}
-			
-			
+
 			// set a pwarp
 			if ((args.length == 1) && (args[0].equalsIgnoreCase("setwarp") || args[0].equalsIgnoreCase("set"))) {
 
@@ -104,7 +115,8 @@ public class CommandListener implements CommandExecutor {
 				// check disabled worlds
 				String world = player.getWorld().getName().toString();
 				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
-					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
+					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " +
+					// PlayerWarpGUI.disabledWorlds.get(i));
 					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
 						player.sendMessage(A.b(PlayerWarpGUI.setInDisabledWorld, player.getDisplayName()));
 						return true;
@@ -113,11 +125,14 @@ public class CommandListener implements CommandExecutor {
 
 				// GriefPrevetion
 				if ((PlayerWarpGUI.enableGriefPrevetion == true) && (PlayerWarpGUI.gp.isEnabled())) {
-					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
-					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(player.getName()))) {
-						player.sendMessage(A.b(PlayerWarpGUI.GPpermission, player.getDisplayName()));
-						return true;
+					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore
+							.getClaimAt(player.getLocation(), false, null);
 
+					if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.bypassGP")) {
+						if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(player.getName()))) {
+							player.sendMessage(A.b(PlayerWarpGUI.GPpermission, player.getDisplayName()));
+							return true;
+						}
 					}
 
 				}
@@ -129,18 +144,21 @@ public class CommandListener implements CommandExecutor {
 					int count = 0;
 					boolean owner = false;
 
-					for (ProtectedRegion r : PlayerWarpGUI.wg.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation())) {
+					for (ProtectedRegion r : PlayerWarpGUI.wg.getRegionManager(player.getWorld())
+							.getApplicableRegions(player.getLocation())) {
 						count++;
 
-						if (r.getOwners().contains(player.getUniqueId()) || r.getMembers().contains(player.getUniqueId())) {
+						if (r.getOwners().contains(player.getUniqueId())
+								|| r.getMembers().contains(player.getUniqueId())) {
 							owner = true;
 						}
 
 					}
-
-					if ((count == 0) || (owner == false)) {
-						player.sendMessage(A.b(PlayerWarpGUI.WGpermission, player.getDisplayName()));
-						return false;
+					if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.bypassWG")) {
+						if ((count == 0) || (owner == false)) {
+							player.sendMessage(A.b(PlayerWarpGUI.WGpermission, player.getDisplayName()));
+							return false;
+						}
 					}
 				}
 
@@ -149,7 +167,8 @@ public class CommandListener implements CommandExecutor {
 				// create file
 				if (PlayerWarpHandler.createPlayerWarpFile(player.getUniqueId())) {
 
-					PlayerWarpHandler.createObjectFromWarpFile(PlayerWarpHandler.savePlayerWarpObject(player.getUniqueId(), player.getLocation()));
+					PlayerWarpHandler.createObjectFromWarpFile(
+							PlayerWarpHandler.savePlayerWarpObject(player.getUniqueId(), player.getLocation()));
 					player.sendMessage(A.b(PlayerWarpGUI.warpSet, player.getDisplayName()));
 				}
 
@@ -215,13 +234,14 @@ public class CommandListener implements CommandExecutor {
 
 			return true;
 		}
-		
-		//-------------------------------------------------------------------------------------------
-		//-------------------------------------------------------------------------------------------
+
+		// -------------------------------------------------------------------------------------------
+		// -------------------------------------------------------------------------------------------
 		// Set lore1
 		// ------------
-		if ((args.length >= 2) && ((args[0].equalsIgnoreCase("lore1") || (args[0].equalsIgnoreCase("lore2") || (args[0].equalsIgnoreCase("lore3")) )))) {
-			int loreNum=0;
+		if ((args.length >= 2) && ((args[0].equalsIgnoreCase("lore1")
+				|| (args[0].equalsIgnoreCase("lore2") || (args[0].equalsIgnoreCase("lore3")))))) {
+			int loreNum = 0;
 			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.lore")) {
 				player.sendMessage(A.b(PlayerWarpGUI.noPermission, player.getDisplayName()));
 				return true;
@@ -236,7 +256,7 @@ public class CommandListener implements CommandExecutor {
 				player.sendMessage(A.b(PlayerWarpGUI.noWarpSet, player.getDisplayName()));
 				return true;
 			}
-			
+
 			if (args[0].equalsIgnoreCase("lore1")) {
 				loreNum = 0;
 			}
@@ -244,11 +264,11 @@ public class CommandListener implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("lore2")) {
 				loreNum = 1;
 			}
-			
+
 			if (args[0].equalsIgnoreCase("lore3")) {
 				loreNum = 2;
 			}
-			
+
 			StringBuilder sb = new StringBuilder(); // Creating a new instance of StringBuilder
 			for (int i = 1; i < args.length; i++) { // Basic for loop, going through the arguments starting from 1
 				sb.append(args[i]); // Adds the argument into the StringBuilder
@@ -268,9 +288,9 @@ public class CommandListener implements CommandExecutor {
 
 			return true;
 		}
-		
-		//----------------------------------------------------------------------------------------------
-		//----------------------------------------------------------------------------------------------
+
+		// ----------------------------------------------------------------------------------------------
+		// ----------------------------------------------------------------------------------------------
 
 		// Set a icon
 		// ------------
@@ -305,7 +325,8 @@ public class CommandListener implements CommandExecutor {
 			return true;
 		}
 
-		// ADMIN =============================================================================================
+		// ADMIN
+		// =============================================================================================
 		if (args.length == 2) {
 
 			if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
@@ -326,13 +347,15 @@ public class CommandListener implements CommandExecutor {
 				}
 
 				if (!PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(otherUUID)) {
-					player.sendMessage(A.b(" &7Player &b[username] &7does not have a &6/pwarp &7set.", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(" &7Player &b[username] &7does not have a &6/pwarp &7set.",
+							Bukkit.getOfflinePlayer(otherUUID).getName()));
 					return true;
 				}
 
 				PlayerWarpManager.removePlayerObject(otherUUID);
 				PlayerWarpHandler.deletePlayerWarpFile(otherUUID);
-				player.sendMessage(A.b(" &7Player &b[username] &6/pwarp &7has been deleted.", Bukkit.getOfflinePlayer(otherUUID).getName()));
+				player.sendMessage(A.b(" &7Player &b[username] &6/pwarp &7has been deleted.",
+						Bukkit.getOfflinePlayer(otherUUID).getName()));
 
 				return true;
 
@@ -351,7 +374,9 @@ public class CommandListener implements CommandExecutor {
 
 				// check if already has a pwarp
 				if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(otherUUID)) {
-					player.sendMessage(A.b(" &7Player &b[username] &7already has a &6/pwarp &7set, you must delete it before etting a new &6/pwarp", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					player.sendMessage(A.b(
+							" &7Player &b[username] &7already has a &6/pwarp &7set, you must delete it before etting a new &6/pwarp",
+							Bukkit.getOfflinePlayer(otherUUID).getName()));
 					return true;
 				}
 
@@ -360,7 +385,8 @@ public class CommandListener implements CommandExecutor {
 
 					// check for beathable air blocks
 					if (!PlayerWarpManager.isSafeLocation(player.getLocation())) {
-						player.sendMessage(A.b(" &7Cannot set a &6/pwarp &7in this unsafe location", player.getDisplayName()));
+						player.sendMessage(
+								A.b(" &7Cannot set a &6/pwarp &7in this unsafe location", player.getDisplayName()));
 						return true;
 					}
 				}
@@ -368,7 +394,8 @@ public class CommandListener implements CommandExecutor {
 				// check disabled worlds
 				String world = player.getWorld().getName().toString();
 				for (int i = 0; i < PlayerWarpGUI.disabledWorlds.size(); i++) {
-					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " + PlayerWarpGUI.disabledWorlds.get(i));
+					// Bukkit.broadcastMessage("pworld: " + world + " dworld: " +
+					// PlayerWarpGUI.disabledWorlds.get(i));
 					if (PlayerWarpGUI.disabledWorlds.get(i).equalsIgnoreCase(world)) {
 						player.sendMessage(A.b(" &6/pwarp &7cannot be set in this world", player.getDisplayName()));
 						return true;
@@ -377,9 +404,12 @@ public class CommandListener implements CommandExecutor {
 
 				// GriefPrevetion
 				if ((PlayerWarpGUI.enableGriefPrevetion == true) && (PlayerWarpGUI.gp.isEnabled())) {
-					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore.getClaimAt(player.getLocation(), false, null);
-					if ((isClaim == null) || !(isClaim.getOwnerName().equalsIgnoreCase(Bukkit.getOfflinePlayer(otherUUID).getName()))) {
-						player.sendMessage(A.b("&7You can only set warps inside the players own claim", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					me.ryanhamshire.GriefPrevention.Claim isClaim = PlayerWarpGUI.gp.dataStore
+							.getClaimAt(player.getLocation(), false, null);
+					if ((isClaim == null) || !(isClaim.getOwnerName()
+							.equalsIgnoreCase(Bukkit.getOfflinePlayer(otherUUID).getName()))) {
+						player.sendMessage(A.b("&7You can only set warps inside the players own claim",
+								Bukkit.getOfflinePlayer(otherUUID).getName()));
 						return true;
 
 					}
@@ -393,7 +423,8 @@ public class CommandListener implements CommandExecutor {
 					int count = 0;
 					boolean owner = false;
 
-					for (ProtectedRegion r : PlayerWarpGUI.wg.getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation())) {
+					for (ProtectedRegion r : PlayerWarpGUI.wg.getRegionManager(player.getWorld())
+							.getApplicableRegions(player.getLocation())) {
 						count++;
 
 						if (r.getOwners().contains(otherUUID) || r.getMembers().contains(otherUUID)) {
@@ -403,7 +434,9 @@ public class CommandListener implements CommandExecutor {
 					}
 
 					if ((count == 0) || (owner == false)) {
-						player.sendMessage(A.b("&7Player &b[username]&7 must be a owner or member of the region to set a &6/pwarp here.", player.getDisplayName()));
+						player.sendMessage(A.b(
+								"&7Player &b[username]&7 must be a owner or member of the region to set a &6/pwarp here.",
+								player.getDisplayName()));
 						return false;
 					}
 				}
@@ -413,8 +446,10 @@ public class CommandListener implements CommandExecutor {
 				// create file
 				if (PlayerWarpHandler.createPlayerWarpFile(otherUUID)) {
 
-					PlayerWarpHandler.createObjectFromWarpFile(PlayerWarpHandler.savePlayerWarpObject(otherUUID, player.getLocation()));
-					player.sendMessage(A.b(" &6/pwarp &7has been set for: &6[username]", Bukkit.getOfflinePlayer(otherUUID).getName()));
+					PlayerWarpHandler.createObjectFromWarpFile(
+							PlayerWarpHandler.savePlayerWarpObject(otherUUID, player.getLocation()));
+					player.sendMessage(A.b(" &6/pwarp &7has been set for: &6[username]",
+							Bukkit.getOfflinePlayer(otherUUID).getName()));
 				}
 
 				return true;
@@ -427,6 +462,4 @@ public class CommandListener implements CommandExecutor {
 		return false;
 	}
 
-	
-	
 }
