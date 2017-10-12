@@ -15,10 +15,20 @@ import Managers.PlayerWarpManager;
 import Objects.chestObject;
 import PlayerWarpGUI.PlayerWarpGUI;
 import Utils.A;
+import br.net.fabiozumbi12.RedProtect.Region;
+import br.net.fabiozumbi12.RedProtect.API.RedProtectAPI;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 public class CommandListener implements CommandExecutor {
+	public static PlayerWarpGUI plugin;
+
+	// -------------------------------------------------------------------------------------
+	// Constructor
+	// -------------------------------------------------------------------------------------
+	public CommandListener(PlayerWarpGUI playerWarpGUI) {
+		plugin = playerWarpGUI;
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -35,33 +45,7 @@ public class CommandListener implements CommandExecutor {
 			// help menu
 			if ((args.length == 1) && (args[0].equalsIgnoreCase("help"))) {
 
-				player.sendMessage(
-						A.c(" &7------------------ &8[&6PlayerWarps&8] &7---------------", player.getDisplayName()));
-
-				player.sendMessage(A.c(" &f/pwarps list  &aview all playerWarps", player.getDisplayName()));
-
-				player.sendMessage(
-						A.c(" &f/pwarps set  &aset your PlayerWarp at your current location", player.getDisplayName()));
-				player.sendMessage(A.c(" &f/pwarps delete  &adelete your PlayerWarp.", player.getDisplayName()));
-				player.sendMessage(
-						A.c(" &f/pwarps icon  &aChange your warp icon to the item in hand.", player.getDisplayName()));
-				player.sendMessage(A.c(
-						" &f/pwarps title Your title text  &aChange the title of your warp text. Supports colorcodes.",
-						player.getDisplayName()));
-				player.sendMessage(A.c(
-						" &f/pwarps lore1 Your Lore text  &aChange text for the lore of your warp. Also lore2, lore3. Supports colorcodes.",
-						player.getDisplayName()));
-
-				if (PlayerWarpGUI.perms.has(player, "playerwarpgui.setwarp.others")) {
-					player.sendMessage(
-							A.c(" &f/pwarps set &6{username}  &aset a PlayerWarp for {username} at your location",
-									player.getDisplayName()));
-					player.sendMessage(A.c(" &f/pwarps delete &6{username}  &adelete {username}'s PlayerWarp",
-							player.getDisplayName()));
-				}
-
-				player.sendMessage(A.c(" &7-----------------------------------------------", player.getDisplayName()));
-
+				PlayerWarpGUI.help.printHelpMenu(player);
 				return true;
 			}
 
@@ -121,6 +105,50 @@ public class CommandListener implements CommandExecutor {
 						player.sendMessage(A.b(PlayerWarpGUI.setInDisabledWorld, player.getDisplayName()));
 						return true;
 					}
+				}
+
+				// RedProtect
+				if ((PlayerWarpGUI.enableRedProtect == true) && (PlayerWarpGUI.rp.isEnabled())) {
+
+					boolean skipRest = false;
+					Region r = RedProtectAPI.getRegion(player.getLocation());
+
+					if (r == null) {
+						player.sendMessage(A.b(PlayerWarpGUI.RPpermission, player.getDisplayName()));
+						return true;
+					}
+					
+					if (!PlayerWarpGUI.perms.has(player, "playerwarpgui.bypassRP")) {
+						skipRest = true;
+					}
+					// member check
+					if (PlayerWarpGUI.useRPMembers  && !skipRest) {
+						if (!r.isMember(player) && !r.isAdmin(player) && !r.isLeader(player)) {
+							player.sendMessage(A.b(PlayerWarpGUI.RPpermission, player.getDisplayName()));
+							return true;
+						} else { 
+							skipRest = true;
+									}
+					}
+
+					// member check
+					if (PlayerWarpGUI.useRPAdmins  && !skipRest) {
+						if (!r.isAdmin(player) && !r.isLeader(player)) {
+							player.sendMessage(A.b(PlayerWarpGUI.RPpermission, player.getDisplayName()));
+							return true;
+						} else { 
+							skipRest = true;
+						}
+					}
+
+					// member check
+					if (PlayerWarpGUI.useRPLeaders  && !skipRest) {
+						if (!r.isLeader(player)) {
+							player.sendMessage(A.b(PlayerWarpGUI.RPpermission, player.getDisplayName()));
+							return true;
+						}
+					}
+
 				}
 
 				// GriefPrevetion

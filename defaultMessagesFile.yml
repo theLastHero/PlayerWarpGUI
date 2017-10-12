@@ -10,6 +10,7 @@ messages:
     setInDisabledWorld: " &6/pwarp &7cannot be set in this world."
     GPpermission: "&7You can only set warps inside your own claim."
     WGpermission: "&7You must be a owner or member of the region to set a &6/pwarp &7here."
+    RPpermission: "&7You must have the right rank permission in a region to set a &6/pwarp &7here."
   titles:
     titleUsage: " &7Usage: &6/pwarps title &7Your title text."
     titleSizeError: " &7Your title is too long.&6"

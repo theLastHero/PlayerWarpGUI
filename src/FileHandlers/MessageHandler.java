@@ -40,6 +40,7 @@ public class MessageHandler {
 			PlayerWarpGUI.setInDisabledWorld = message.getString("messages.errors.setInDisabledWorld", " &6/pwarp &7cannot be set in this world");
 			PlayerWarpGUI.GPpermission = message.getString("messages.errors.GPpermission", "&7You can only set warps inside your own claim");
 			PlayerWarpGUI.WGpermission = message.getString("messages.errors.WGpermission", "&7You must be a owner or member of the region to set a &6/pwarp &7here.");
+			PlayerWarpGUI.RPpermission = message.getString("messages.errors.RPpermission", "&7You must build permission in this region to set a &6/pwarp &7here.");
 			
 			PlayerWarpGUI.withdrawn = message.getString("messages.others.withdrawn", "&6[cost] &7has been withdrawn from your account");
 			PlayerWarpGUI.warpSet = message.getString("messages.others.warpset", " &6/pwarp &7has been set for: &6[username]");

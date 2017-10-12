@@ -1,12 +1,12 @@
 name: PlayerWarpGUI
-version: 1.3.3
+version: 1.3.4
 description: PlayerWarpGUI
 author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: PlayerWarpGUI.PlayerWarpGUI
 depend: [Vault]
-softdepend: [GriefPrevention, worldguard, WorldGuard]
+softdepend: [GriefPrevention, worldguard, WorldGuard, RedProtect]
 commands:
    playerwarps:
       description: Set and go to player warps.

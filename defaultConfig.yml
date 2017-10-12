@@ -49,7 +49,7 @@ Teleport:
 # +----------+#
 # | Messages |#
 # +----------+#
-# prefix: Text that wil be displayed before every message sent
+# prefix: Text that will be displayed before every message sent
 #         from this plugin.
 Messages:
   prefix: '&6[&aPlayerWarpGUI&6] &f'
@@ -123,6 +123,18 @@ WorldGuard:
   enabled: false
   owners: true
   members: true
+
+# +----------------+#
+# | RedProtect |#
+# +----------------+#
+# enabled: Use RedProtect support. When true players can
+#          only set a /pwarp in a region they are a member
+#          admin or leader of.
+RedProtect:
+  enabled: false
+  members: false
+  admins: false
+  leaders: true
 
 
 # +---------+#

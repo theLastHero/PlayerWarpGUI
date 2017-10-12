@@ -24,9 +24,12 @@ import Managers.PlayerWarpManager;
 import Objects.PlayerWarpObject;
 import Objects.chestObject;
 import Utils.A;
+import br.net.fabiozumbi12.RedProtect.RedProtect;
 
 import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
+import CommandActions.Help;
 
 public class PlayerWarpGUI extends JavaPlugin {
 
@@ -67,6 +70,11 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static boolean enableWorldGuard = false; // use worldguard
 	public static boolean useOwners = true; // owners can set warps
 	public static boolean useMembers = true; // members can set warps
+	public static boolean enableRedProtect = false; // use redprotect
+	public static boolean useRPMembers = true; // owners can set warps
+	public static boolean useRPAdmins = true; // members can set warps
+	public static boolean useRPLeaders = true; // owners can set warps
+	
 	public static boolean useMetrics = true; // members can set warps
 
 	public static int setWarpCost = 0; // cost of setting a warp
@@ -77,9 +85,11 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static PlayerWarpHandler playerWarpHandler;
 	public static PlayerWarpManager playerWarpManager;
 	public static chestObject chestObject;
+	public static Help help;
 
 	public static GriefPrevention gp;
 	public static WorldGuardPlugin wg;
+	public static Plugin rp;
 
 	public static String noPermission;
 	
@@ -90,6 +100,7 @@ public class PlayerWarpGUI extends JavaPlugin {
 	public static String setInDisabledWorld;
 	public static String GPpermission;
 	public static String WGpermission;
+	public static String RPpermission;
 	public static String warpSet;
 	public static String deleteWarp;
 	public static String titleUsage;
@@ -123,13 +134,14 @@ public class PlayerWarpGUI extends JavaPlugin {
 		instance = this;
 		this.configHandler = new ConfigHandler(this);
 		this.messageHandler = new MessageHandler(this);
+		PlayerWarpGUI.help = new Help();
 		PlayerWarpGUI.playerWarpHandler = new PlayerWarpHandler(this);
 		PlayerWarpGUI.playerWarpManager = new PlayerWarpManager(this);
 		PlayerWarpGUI.chestObject = new chestObject(this);
 		PlayerWarpGUI.a = new A(plugin);
 
 		// listeners
-		this.getCommand("playerwarps").setExecutor(new CommandListener());
+		this.getCommand("playerwarps").setExecutor(new CommandListener(this));
 		Bukkit.getServer().getPluginManager().registerEvents(new ChestListener(plugin), this);
 
 		// load config file data
@@ -156,6 +168,10 @@ public class PlayerWarpGUI extends JavaPlugin {
 
 		if (enableWorldGuard == true) {
 			wg = WGBukkit.getPlugin();
+		}
+		
+		if (enableRedProtect == true) {
+			rp = Bukkit.getPluginManager().getPlugin("RedProtect");
 		}
 
 		//metrics

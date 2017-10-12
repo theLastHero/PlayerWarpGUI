@@ -2,11 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/GriefPrevention.jar"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/ProtocolLib.jar"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/spigot-1.12.1-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/Vault.jar"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/worldedit-bukkit-6.1.7.3.jar"/>
-	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN CODE/Libarys/1.12.1/worldguard-6.2.1.jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/GriefPrevention(1).jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/spigot-1.12.2.jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/Vault(1).jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/worldedit-bukkit-6.1.7.3(1).jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/worldguard-6.2.1(1).jar"/>
+	<classpathentry kind="lib" path="E:/MINECRAFT/PLUGIN_CODE/Libary_1.12.2/RedProtect-Spigot-7.2.2-b435.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

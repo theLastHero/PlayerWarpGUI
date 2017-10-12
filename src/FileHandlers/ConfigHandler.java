@@ -121,8 +121,7 @@ public class ConfigHandler {
 			// load enableWorldGuard
 			PlayerWarpGUI.enableWorldGuard = config.getBoolean("WorldGuard.enabled", false);
 			// A.d("Setting enableWorldGuardto: " + PlayerWarpGUI.enableWorldGuard);
-
-			// load enableWorldGuard
+			
 			PlayerWarpGUI.useOwners = config.getBoolean("WorldGuard.enabled", false);
 			// A.d("Setting owners to: " + PlayerWarpGUI.useOwners);
 
@@ -130,6 +129,17 @@ public class ConfigHandler {
 			PlayerWarpGUI.useMembers = config.getBoolean("WorldGuard.enabled", false);
 			// A.d("Setting members to: " + PlayerWarpGUI.useMembers);
 
+
+			// load RedProtect
+			PlayerWarpGUI.enableRedProtect = config.getBoolean("RedProtect.enabled", false);
+			// A.d("Setting enableWorldGuardto: " + PlayerWarpGUI.enableWorldGuard);
+			PlayerWarpGUI.useRPAdmins = config.getBoolean("RedProtect.admins", false);
+			// A.d("Setting owners to: " + PlayerWarpGUI.useOwners);
+			PlayerWarpGUI.useRPLeaders = config.getBoolean("RedProtect.leaders", false);
+			// A.d("Setting owners to: " + PlayerWarpGUI.useOwners);
+			PlayerWarpGUI.useRPMembers = config.getBoolean("RedProtect.members", false);
+			// A.d("Setting owners to: " + PlayerWarpGUI.useOwners);
+			
 			// load debug_mode
 			PlayerWarpGUI.DEBUG_MODE = config.getBoolean("Settings.debug_mode", false);
 
