@@ -2,6 +2,7 @@ package FileHandlers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -28,8 +29,8 @@ public class PlayerWarpHandler {
 	// -----------------------------------------------------
 	// getPlayer
 	// -----------------------------------------------------
-	public static ArrayList<PlayerWarpObject> getPlayerWarpObjects() {
-		return plugin.playerWarpObjects;
+	public static List<PlayerWarpObject> getPlayerWarpObjects() {
+		return PlayerWarpGUI.playerWarpObjects;
 	}
 
 	public static boolean createPlayerWarpFile(UUID uuid) {
@@ -131,7 +132,7 @@ public class PlayerWarpHandler {
 	// ------------------------------------------------------
 	// updateTitle
 	// ------------------------------------------------------
-	public static File updatelore(UUID uuid, ArrayList<String> lore) {
+	public static File updatelore(UUID uuid, List<String> lore) {
 
 		File playerDataFile = new File(PlayerWarpGUI.instance.warpsFolder + File.separator + uuid.toString() + ".yml");
 
@@ -163,7 +164,7 @@ public class PlayerWarpHandler {
 		String uuid = null;
 		String icon = null;
 		String title = null;
-		ArrayList<String> loreList;
+		List<String> loreList;
 		boolean enbaled = true;
 
 		// check if file name is a validate UUID
@@ -173,10 +174,10 @@ public class PlayerWarpHandler {
 			return true;
 		}
 
-		if (!Bukkit.getOfflinePlayer(playerUUID).hasPlayedBefore()) {
-			A.d("Cannot load PlayerWarp file: Player not found");
-			return true;
-		}
+		//if (!Bukkit.getOfflinePlayer(playerUUID).hasPlayedBefore()) {
+		//	A.d("Cannot load PlayerWarp file: Player not found");
+		//	return true;
+		//}
 
 		// check if object already exsits
 		if (PlayerWarpManager.getPlayerWarpManager().checkPlayerWarpObject(playerUUID)) {

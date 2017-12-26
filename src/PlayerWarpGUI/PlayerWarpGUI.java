@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
+import CommandActions.Help;
 import FileHandlers.ConfigHandler;
 import FileHandlers.MessageHandler;
 import FileHandlers.PlayerWarpHandler;
@@ -24,19 +24,16 @@ import Managers.PlayerWarpManager;
 import Objects.PlayerWarpObject;
 import Objects.chestObject;
 import Utils.A;
-import br.net.fabiozumbi12.RedProtect.RedProtect;
-
-import com.sk89q.worldguard.bukkit.WGBukkit;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
-import CommandActions.Help;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 public class PlayerWarpGUI extends JavaPlugin {
 
 	public static PlayerWarpGUI instance;
 	private PlayerWarpGUI plugin;
 
-	public static ArrayList<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
+	public static List<PlayerWarpObject> playerWarpObjects = new ArrayList<PlayerWarpObject>();
 	
 	public static Economy econ = null;
 	public static Permission perms = null;

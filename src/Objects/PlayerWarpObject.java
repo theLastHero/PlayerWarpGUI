@@ -1,6 +1,6 @@
 package Objects;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import PlayerWarpGUI.PlayerWarpGUI;
@@ -24,7 +24,7 @@ public class PlayerWarpObject {
     }
 
 	public void removePlayerWarpObject(UUID playerUUID) {
-		plugin.playerWarpObjects.remove(this);
+		PlayerWarpGUI.playerWarpObjects.remove(this);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class PlayerWarpObject {
 	private String warpLocation;
 	private String title;
 	private String icon;
-	private ArrayList<String> loreList;
+	private List<String> loreList;
 
 	/**
 	 * @return the title
@@ -56,11 +56,11 @@ public class PlayerWarpObject {
 		this.loreList.set(loreLine, loreText);
 	}
 
-	public int PlayerWarpObject() {
+/*	public int PlayerWarpObject() {
 		 return uid;
-	}
+	}*/
 
-	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title, String icon, ArrayList<String> loreList) {
+	public PlayerWarpObject(UUID playerUUID, String warpLocation, String title, String icon, List<String> loreList) {
 
 		this.setPlayerUUID(playerUUID);
 		this.setWarpLocation(warpLocation);
@@ -68,7 +68,7 @@ public class PlayerWarpObject {
 		this.setIcon(icon);
 		this.setLoreList(loreList);
 		
-		plugin.playerWarpObjects.add(this);
+		PlayerWarpGUI.playerWarpObjects.add(this);
 
 	}
 
@@ -116,11 +116,11 @@ public class PlayerWarpObject {
 		this.icon = icon;
 	}
 
-	public ArrayList<String> getLoreList() {
+	public List<String> getLoreList() {
 		return loreList;
 	}
 
-	public void setLoreList(ArrayList<String> loreList) {
+	public void setLoreList(List<String> loreList) {
 		this.loreList = loreList;
 	}
 

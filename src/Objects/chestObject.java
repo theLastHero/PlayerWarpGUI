@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import Managers.PlayerWarpManager;
 import PlayerWarpGUI.PlayerWarpGUI;
-import Utils.A;
 
 public class chestObject {
 
@@ -60,7 +59,7 @@ public class chestObject {
 	}
 
 	public static PlayerWarpObject getPlayerWarpObject(int uid) {
-		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpGUI.playerWarpObjects) {
 			if (n.getUid() == uid) {
 				return n;
 			}
@@ -76,7 +75,7 @@ public class chestObject {
 
 	}
 
-	public ItemStack setLore(ItemStack item, ArrayList<String> message) {
+	public ItemStack setLore(ItemStack item, List<String> message) {
 		ItemMeta meta = item.getItemMeta();
 		if (meta.hasLore()) {
 			message.addAll(meta.getLore());
@@ -86,7 +85,7 @@ public class chestObject {
 		return item;
 	}
 
-	@SuppressWarnings({ "unused" })
+	@SuppressWarnings({ "unused"})
 	public static void openGUI(Player player, int page) {
 
 		int pageNumber = page;
@@ -103,7 +102,7 @@ public class chestObject {
 		Inventory inv = Bukkit.createInventory(null, chestSize, replaceColorVariables(PlayerWarpGUI.chestText));
 
 		// create array list of warps by name from hashmap
-		ArrayList<PlayerWarpObject> playerWarpObjects = PlayerWarpObject.plugin.playerWarpObjects;
+		List<PlayerWarpObject> playerWarpObjects = PlayerWarpGUI.playerWarpObjects;
 
 		// set start
 		startNum = pageNum * pageSize;
@@ -125,7 +124,7 @@ public class chestObject {
 		// !!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!
 		// not showing nextpage icons, something to do with loop size bigger the
 		// startnum????
-		for (int i = 0; i < loopSize; i++) {
+		for (int i = 0; (i < loopSize ) && (i < chestSize-1); i++) {
 			int objNum = startNum + i;
 			// Bukkit.broadcastMessage("aaa: " + objNum);
 			//
@@ -143,7 +142,7 @@ public class chestObject {
 			String title = a.getTitle();
 			boolean enabled = true;
 
-			playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
+			//playerWarpText = A.c(playerWarpText, Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
 			// playerWarpText = A.c(playerWarpText, PlayerWarpGUI.nameFetcher.call().);
 
 			// warp icon
@@ -156,9 +155,9 @@ public class chestObject {
 				
 				ItemStack Item_Skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 			    SkullMeta Meta_Skull = (SkullMeta) Item_Skull.getItemMeta();
-			    ArrayList<String> Lore_Skull = new ArrayList<>();
+			    List<String> Lore_Skull = new ArrayList<>();
 			    
-			    Meta_Skull.setOwner(Bukkit.getOfflinePlayer(a.getPlayerUUID()).getName());
+			    Meta_Skull.setOwningPlayer(Bukkit.getOfflinePlayer(a.getPlayerUUID()));
 		        Lore_Skull.clear();
 		        Lore_Skull.add(null);
 		        Item_Skull.setItemMeta(Meta_Skull);
@@ -179,10 +178,10 @@ public class chestObject {
 			// ============================
 
 			//
-			ArrayList<String> lore = new ArrayList<String>();
+			List<String> lore = new ArrayList<String>();
 
 			// lore.add(playerWarpObjects.get(objNum).getWarpLocation());
-			ArrayList<String> loreList = a.getLoreList();
+			List<String> loreList = a.getLoreList();
 			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(0)));
 			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(1)));
 			lore.add(ChatColor.translateAlternateColorCodes('&', loreList.get(2)));

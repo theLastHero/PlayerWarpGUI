@@ -1,6 +1,6 @@
 package Managers;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
 import FileHandlers.PlayerWarpHandler;
 import Objects.PlayerWarpObject;
 import Objects.chestObject;
@@ -51,7 +52,7 @@ public class PlayerWarpManager {
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
 			Block blockLandsOn = feet;
-			if (blockLandsOn.getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+			if (blockLandsOn.getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)).getType())) {
 				return false; // not solid
 			}
 		}
@@ -59,7 +60,7 @@ public class PlayerWarpManager {
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
 
-			if (feet.getLocation().add(0, -1, 0).getBlock().getRelative(BlockFace.UP).getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+			if (feet.getLocation().add(0, -1, 0).getBlock().getRelative(BlockFace.UP).getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)).getType())) {
 				return false; // not solid
 			}
 		}
@@ -67,7 +68,7 @@ public class PlayerWarpManager {
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
 			Block blockLandsOn = feet.getRelative(BlockFace.DOWN);
-			if (blockLandsOn.getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+			if (blockLandsOn.getType().equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)).getType())) {
 				return false; // not solid
 			}
 		}
@@ -75,7 +76,7 @@ public class PlayerWarpManager {
 		// here check blocks to land on
 		for (int i = 0; i < PlayerWarpGUI.unsafeBlocks.size(); i++) {
 			Material blockLandsOn = feet.getLocation().add(0, 1, 0).getBlock().getType();
-			if (blockLandsOn.equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)))) {
+			if (blockLandsOn.equals(chestObject.parseString(PlayerWarpGUI.unsafeBlocks.get(i)).getType())) {
 				return false; // not solid
 			}
 		}
@@ -127,7 +128,7 @@ public class PlayerWarpManager {
 	public void updatePlayerObjectLore(UUID playerUUID, String loreText, int loreLine) {
 		if (getPlayerWarpObject(playerUUID) != null) {
 			PlayerWarpObject a = getPlayerWarpObject(playerUUID);
-			ArrayList<String> loreList = a.getLoreList();
+			List<String> loreList = a.getLoreList();
 			loreList.set(loreLine, loreText);
 			//a.setLoreLine(loreText, loreLine);
 			a.setLoreList(loreList);
@@ -139,7 +140,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// ------------------------------------------------------
 	public static PlayerWarpObject getPlayerWarpObject(UUID playerUUID) {
-		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpGUI.playerWarpObjects) {
 			if (n.getPlayerUUID().equals(playerUUID)) {
 				return n;
 			}
@@ -152,7 +153,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// ------------------------------------------------------
 	public Location getPlayerWarplocation(int warpID) {
-		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpGUI.playerWarpObjects) {
 			if (n.getUid() == warpID) {
 				n.getWarpLocation();
 			}
@@ -165,7 +166,7 @@ public class PlayerWarpManager {
 	// getPlayerWarpObject
 	// -----------------------------------------------------
 	public boolean checkPlayerWarpObject(UUID playerUUID) {
-		for (PlayerWarpObject n : PlayerWarpObject.plugin.playerWarpObjects) {
+		for (PlayerWarpObject n : PlayerWarpGUI.playerWarpObjects) {
 			if (n.getPlayerUUID().equals(playerUUID)) {
 				return true;
 			}
@@ -177,7 +178,7 @@ public class PlayerWarpManager {
 	// -----------------------------------------------------
 	// createWarpObjects
 	// -----------------------------------------------------
-	public void createWarpObjects(UUID playerUUID, String warpLocation, String title, String icon, ArrayList<String> loreList) {
+	public void createWarpObjects(UUID playerUUID, String warpLocation, String title, String icon, List<String> loreList) {
 		new PlayerWarpObject(playerUUID, warpLocation, title, icon, loreList);
 	}
 
